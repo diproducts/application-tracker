@@ -5,7 +5,7 @@ const App = props => {
     const [serverResponse, setServerResponse] = useState('');
 
    const getServerResponse = name => {
-        fetch('http://localhost:5000//api', {
+        fetch('http://localhost:5000/api', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
