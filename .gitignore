@@ -1,2 +1,5 @@
 .venv
 node_modules
+server/credentials.yaml
+server/__pycache__
+server/tables.txt
