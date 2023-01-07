@@ -9,10 +9,6 @@ api = Api(app)
 CORS(app)
 
 # defining arguments
-test_args = reqparse.RequestParser()
-test_args.add_argument('arg1', type=int, help='First number', location='form') # substitute "form" with "args" to receive args in a URL query
-test_args.add_argument('arg2', type=int, help='Second number', location='form')
-
 api_args = reqparse.RequestParser()
 api_args.add_argument('name', type=str, help='Enter your name')
 
@@ -35,14 +31,20 @@ class Registration(Resource):
         args = registration_args.parse_args()
         result = d.create_user(args['email'], args['password'], args['name'])
         return result
+
+class Validation(Resource):
+    def get(self, token):
+        result = d.validate_email(token)
+        return result
         
 
 api.add_resource(Name, '/api')
 api.add_resource(Registration, '/create_user')
+api.add_resource(Validation, '/confirm_mail/<string:token>')
 
 
 if __name__ == '__main__':
     # creating database object
     d = Database('server/database.db')
     # running the application
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=3000)
