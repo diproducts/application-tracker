@@ -1,5 +1,8 @@
 .venv
+server/.venv
 node_modules
 server/credentials.yaml
 server/__pycache__
 server/tables.txt
+server/.env
+server/deploy_server.sh
