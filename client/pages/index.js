@@ -17,7 +17,7 @@ export default function Home() {
       <main className={styles.main}>
         <div></div>
         <div className={styles.center}>
-          <h1>Application tracker: Landing page</h1>
+          <h1>Application tracker</h1>
         </div>
         <div className={styles.grid}>
           <a
