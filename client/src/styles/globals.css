@@ -85,14 +85,35 @@ body {
   overflow-x: hidden;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(180deg, #F1E7FF 0%, #FFF0F5 100%);
-}
-
 a {
   color: inherit;
   text-decoration: none;
+}
+
+/* Footer styles */
+
+.footer {
+  position: fixed;
+  background: #666666CC;
+  width: 100vw;
+  height: 50px;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  color: #DADADA;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.ul li {
+  display: inline;
+  margin-left: 33px;
 }
 
 @media (prefers-color-scheme: dark) {

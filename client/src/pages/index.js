@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Image from 'next/image'
+import Link from 'next/link';
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
 
@@ -20,27 +20,17 @@ export default function Home() {
           <h1>Application tracker</h1>
         </div>
         <div className={styles.grid}>
-          <a
-            href=""
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <Link href="/signup" className={styles.card}>
             <h2 className={inter.className}>
               Sign Up <span>-&gt;</span>
             </h2>
-          </a>
+          </Link>
 
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Log In <span>-&gt;</span>
-            </h2>
-          </a>
+          <Link href="/login" className={styles.card}>
+              <h2 className={inter.className}>
+                  Log In <span>-&gt;</span>
+              </h2>
+          </Link>
         </div>
       </main>
     </>
