@@ -4,6 +4,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import Head from 'next/head';
+import { useRouter } from 'next/router'
 import Footer from '../components/footer';
 import styles from '@/styles/Login.module.css';
 
@@ -11,18 +12,14 @@ const joiPassword = Joi.extend(joiPasswordExtendCore);
 
 const schema = Joi.object({
     email: Joi.string().email({ tlds: { allow: false } }),
-    password: joiPassword
-                .string()
-                .min(8)
-                .minOfSpecialCharacters(1)
-                .minOfLowercase(1)
-                .minOfUppercase(1)
-                .minOfNumeric(1)
-                .noWhiteSpaces()
+    password: joiPassword.string()
 })
 
+const API_URI = process.env.apiURL;
+
 export default function Login() {
-    const { register, formState: { errors }, handleSubmit } = useForm(
+    const router = useRouter();
+    const { register, formState, handleSubmit } = useForm(
         {
         mode: 'onSubmit',
         defaultValues: {
@@ -32,24 +29,46 @@ export default function Login() {
         resolver: joiResolver(schema)
     });
 
-    const onSubmit = data => console.log(data);
-
     // state for determine if the fields were correctly filled
-    const [correctEmail, setCorrectEmail] = useState(false);
-    const [correctPassword, setCorrectPassword] = useState(false);
-    const [disabledButton, setDisabledButton] = useState(true);
+    const [emailClasses, setEmailClasses] = useState(styles.input);
+    const [passwordClasses, setPasswordClasses] = useState(styles.input);
+
+    // function for submitting data to the server;
+    const onSubmit = async data => {
+        console.log('submitted')
+        if (schema.validate(data)) {
+            const response = await fetch(`${API_URI}/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                  },
+                body: JSON.stringify(data)
+            });
+            if (response.ok) {
+                router.push('/dashboard');
+                return;
+            }
+            setRedBorder();
+        } else {
+            setRedBorder();
+        }
+    };
+
+    const setRedBorder = () => {
+        setEmailClasses(styles.input + ' ' + styles.failed);
+        setPasswordClasses(styles.input + ' ' + styles.failed);
+    }
 
     // changing submit button to be disabled or not depending on the input fields
     const handleChange = e => {
         const field = e.target.name;
         const notValidated = field === 'email' ? schema.validate({email: e.target.value}).error : 
                                                 schema.validate({password: e.target.value}).error;
+
         if (notValidated) {
-            field === 'email' ? setCorrectEmail(false) : setCorrectPassword(false);
-            setDisabledButton(true);
+            field === 'email' ? setEmailClasses(styles.input) : setPasswordClasses(styles.input);
         } else {
-            field === 'email' ? setCorrectEmail(true) : setCorrectPassword(true);
-            if (correctEmail && correctPassword) setDisabledButton(false);
+            field === 'email' ? setEmailClasses(styles.input + ' ' + styles.complete) : setPasswordClasses(styles.input + ' ' + styles.complete);
         }
         return;
     }
@@ -61,9 +80,6 @@ export default function Login() {
                 <meta name="description" content="Application tracker" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/icon.png" />
-                <link rel="preconnect" href="https://fonts.googleapis.com" />
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-                <link href="https://fonts.googleapis.com/css2?family=Inter&family=Noto+Sans:wght@500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
             </Head>
             <main className={styles.container}>
 
@@ -73,7 +89,7 @@ export default function Login() {
                     <label>
                         email:
                         <input
-                            className={styles.input} 
+                            className={emailClasses} 
                             {...register('email', { required: true, onChange: (e) => handleChange(e)
                             })}
                         />
@@ -83,11 +99,11 @@ export default function Login() {
                         <input {...register('password', 
                                 { required: true, onChange: (e) => handleChange(e) })} 
                             type='password' 
-                            className={styles.input} 
+                            className={passwordClasses} 
                         />
                     </label>
                     <div className={styles.submitGroup}>
-                        <input className={styles.submit} disabled={disabledButton} type='submit' value="LOG IN" />
+                        <input className={styles.submit} disabled={!formState.isValid} type='submit' value="LOG IN" />
                         <p>Forgot password?</p>
                     </div>
                 </form>

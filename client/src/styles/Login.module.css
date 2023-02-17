@@ -26,7 +26,7 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    gap: 35px;
+    gap: 25px;
     padding-bottom: 18%;
 }
 
@@ -34,10 +34,12 @@
     color: #7066E4;
     font-family: 'Noto Sans', sans-serif;
     font-size: 24px;
+    font-weight: 200;
     line-height: 33px;
     letter-spacing: 0em;
     text-align: left;
     margin: 0;
+    margin-bottom: 10px;
     padding: 0;
 }
 
@@ -104,12 +106,35 @@
     box-shadow: 0px 4px 4px 0px #00000040;
 }
 
-.submit:disabled {
-    background-color: #AFCFFF;
+.complete {
+    border: 1px solid #7FD4BB;
 }
+
+.failed {
+    border: 1px solid #D79494;
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+  }
 
 .submit:hover {
     background-color: #5297FF;
+}
+
+.submit:disabled {
+    background-color: #AFCFFF;
 }
 
 .submit:active {
