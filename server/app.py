@@ -4,7 +4,7 @@ from flask_cors import CORS
 from flask_session import Session
 from config import Config
 import bcrypt
-from models import db, Users
+from models import db, User
 
 # defining flask application
 app = Flask(__name__)
@@ -29,11 +29,11 @@ login_args.add_argument('remember', type=bool, help='Do we need to remember the 
 class Registration(Resource):
     def post(self):
         args = registration_args.parse_args()
-        user_exists = Users.query.filter_by(email=args['email']).first()
+        user_exists = User.query.filter_by(email=args['email']).first()
         if user_exists:
             return {"error": "EMAIL_OCCUPIED"}, 401
         try:
-            u = Users(email=args['email'], password=args['password'], name=args['name'])
+            u = User(email=args['email'], password=args['password'], name=args['name'])
             db.session.add(u)
             db.session.commit()
             #u.send_validation_link()
@@ -45,7 +45,7 @@ class Registration(Resource):
 class Validation(Resource):
     def get(self, token: str):
         secret_key, user_id = token.split('-')
-        u = Users.query.filter_by(id=user_id, secret_key=secret_key, email_confirmed=0).first()
+        u = User.query.filter_by(id=user_id, secret_key=secret_key, email_confirmed=0).first()
         if not u:
             return {"error": "ERROR_OCCURED"}, 400
         u.email_confirmed = True
@@ -57,7 +57,7 @@ class Validation(Resource):
 class Login(Resource):
     def post(self):
         args = login_args.parse_args()
-        u = Users.query.filter_by(email=args['email']).first()
+        u = User.query.filter_by(email=args['email']).first()
         if not u or not bcrypt.checkpw(args['password'].encode(), u.password):
             return {"error": "ACCESS_DENIED"}, 401
         else:
@@ -79,14 +79,14 @@ class CheckIfLoggedIn(Resource):
         user_id = session.get('user_id')
         if not user_id:
             return {"response": "You are not logged in :("}
-        u = Users.query.filter_by(id=user_id).first()
+        u = User.query.filter_by(id=user_id).first()
         return {"response": "You are logged in! :)", "email": u.email, "name": u.name}
 
 
 # DEBUG classes
 class GetUsers(Resource):
     def get(self):
-        users = Users.query.all()
+        users = User.query.all()
         json = {}
         for user in users:
             json[user.id] = {"email": user.email, "name": user.name, "registration_date": str(user.registration_date), "email_confirmed": user.email_confirmed}
@@ -98,7 +98,7 @@ class DeleteUsers(Resource):
         key_list = list(session.keys())
         for key in key_list:
             session.pop(key)
-        db.session.query(Users).delete()
+        db.session.query(User).delete()
         db.session.commit()
         return {"response": "All users successfully deleted"}
 
