@@ -7,17 +7,6 @@
     background: linear-gradient(180deg, #F1E7FF 0%, #FFF0F5 100%);
 }
 
-.span {
-    position: absolute;
-    top: 10px;
-    left: 20px;
-    font-family: 'Playfair Display', serif;
-    font-size: 24px;
-    line-height: 32px;
-    letter-spacing: 0em;
-    text-align: left;
-}
-
 .form {
     background: #FFFFFF5E;
     height: 100vh;
@@ -140,4 +129,11 @@
 .submit:active {
     background-color: #3E8BFF;
     box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.passwordText {
+    font-family: Inter;
+    font-size: 9px;
+    font-style: italic;
+
 }
