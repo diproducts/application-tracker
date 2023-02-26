@@ -15,7 +15,7 @@ def validation_mail(recipient, token):
     msg['From'] = sender
     msg['To'] = recipient
 
-    with open('server/static/email_confirmation.html', 'r') as f:
+    with open('static/email_confirmation.html', 'r') as f:
         html = f.read()
     html = html.replace('INSERT_LINK_HERE', link)
 
