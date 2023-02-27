@@ -14,7 +14,7 @@ export default function SignUp() {
         {
         mode: 'onSubmit',
         defaultValues: {
-                username: '',
+                name: '',
                 email: '',
                 password: '',
                 passwordConfirmed: ''
@@ -23,7 +23,7 @@ export default function SignUp() {
 
     // state for determine if the fields were correctly filled
     const [inputStyles, setInputStyles] = useState({
-        username: styles.input,
+        name: styles.input,
         email: styles.input,
         password: styles.input,
         passwordConfirmed: styles.input
@@ -55,7 +55,7 @@ export default function SignUp() {
     const setRedBorder = () => {
         const styling = styles.input + ' ' + styles.failed;
         setInputStyles({
-            username: styling,
+            name: styling,
             email: styling,
             password: styling,
             passwordConfirmed: styling
@@ -107,8 +107,8 @@ export default function SignUp() {
                     <label>
                         username:
                         <input
-                            className={inputStyles.username} 
-                            {...register('username', { required: true, onChange: (e) => handleChange(e)
+                            className={inputStyles.name} 
+                            {...register('name', { required: true, onChange: (e) => handleChange(e)
                             })}
                         />
                     </label>

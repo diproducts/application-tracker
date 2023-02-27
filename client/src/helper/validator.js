@@ -3,7 +3,7 @@ import * as EmailValidator from 'email-validator';
 function Schema() {
     this.email = {};
     this.password = {type: 'string', empty: false, reg: /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}/};
-    this.username = {reg: /[^!#$%^&*()?\s]/};
+    this.name = {reg: /[^!#$%^&*()?\s]/};
     this.passwordConfirmed = {};
 }
 
@@ -22,7 +22,7 @@ Schema.prototype.validate = function(input, mode = 'singup') {
         if (key === 'email') {
             if (!EmailValidator.validate(value)) return false;
         }
-        else if (key === 'password' || key === 'username') {
+        else if (key === 'password' || key === 'name') {
             if (!this[key].reg.test(value)) return false;
         } else {
             if (value != input.password || value.length === 0) return false
