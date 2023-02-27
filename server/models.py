@@ -1,11 +1,12 @@
-#from app import db
 from flask_sqlalchemy import SQLAlchemy
+from flask_jwt_extended import JWTManager
 from datetime import datetime
 import secrets
 import bcrypt
 from mail import validation_mail
 
 db = SQLAlchemy()
+jwt = JWTManager()
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -38,6 +39,15 @@ class User(db.Model):
     def __repr__(self):
         return f'<User id: {self.id}, email: {self.email}>'
     
+@jwt.user_identity_loader
+def user_identity_lookup(user):
+    return user.id
+
+@jwt.user_lookup_loader
+def user_lookup_callback(_jwt_header, jwt_data):
+    identity = jwt_data["sub"]
+    return User.query.filter_by(id=identity).one_or_none()
+
 
 class Application(db.Model):
     id = db.Column(db.Integer, primary_key=True)

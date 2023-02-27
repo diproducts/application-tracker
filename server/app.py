@@ -1,10 +1,10 @@
 from flask import Flask, session
 from flask_restful import Api, Resource, reqparse
 from flask_cors import CORS
-from flask_session import Session
+from flask_jwt_extended import create_access_token, get_jwt, get_jwt_identity, unset_jwt_cookies, jwt_required, current_user
 from config import Config
 import bcrypt
-from models import db, User
+from models import db, jwt, User
 
 # defining flask application
 app = Flask(__name__)
@@ -12,7 +12,7 @@ api = Api(app)
 app.config.from_object(Config)
 db.init_app(app)
 CORS(app, supports_credentials=True)
-server_session = Session(app)
+jwt.init_app(app)
 
 # defining arguments
 registration_args = reqparse.RequestParser()
@@ -61,8 +61,8 @@ class Login(Resource):
         if not u or not bcrypt.checkpw(args['password'].encode(), u.password):
             return {"error": "ACCESS_DENIED"}, 401
         else:
-            session["user_id"] = u.id
-            return {"response": "ACCESS_ALLOWED"}, 200
+            access_token = create_access_token(identity=u)
+            return {"access_token": access_token}, 200
 
 
 class Logout(Resource):
@@ -75,12 +75,10 @@ class Logout(Resource):
         
 
 class CheckIfLoggedIn(Resource):
+    @jwt_required()
     def get(self):
-        user_id = session.get('user_id')
-        if not user_id:
-            return {"response": "You are not logged in :("}
-        u = User.query.filter_by(id=user_id).first()
-        return {"response": "You are logged in! :)", "email": u.email, "name": u.name}
+        #u = User.query.filter_by(id=user_id).first()
+        return {"logged_in_as": current_user.email}, 200
 
 
 # DEBUG classes
