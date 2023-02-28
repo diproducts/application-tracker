@@ -10,7 +10,6 @@ class Config:
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'database.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = dotenv_values(".env")['SECRET_KEY']
-    JWT_SECRET_KEY = dotenv_values(".env")['SECRET_KEY']
 
     SESSION_TYPE = "redis"
     SESSION_PERMANENT = False
