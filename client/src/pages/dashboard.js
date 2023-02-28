@@ -4,14 +4,12 @@ import Head from 'next/head';
 import styles from '@/styles/Dashboard.module.css';
 import {useEffect} from 'react';
 
-const API_URI = process.env.apiURL;
-
 export default function Dashboard(props) {
 
     // temporary testing function
     useEffect(() => {
         const fetchData = async() => {
-            const response = await fetch(`${API_URI}/check_if_logged_in`);
+            const response = await fetch(`api/check_if_logged_in`);
             const data = await response.json();
             console.log(data);
         }
