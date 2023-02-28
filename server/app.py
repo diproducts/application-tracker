@@ -2,9 +2,10 @@ from flask import Flask, session
 from flask_restful import Api, Resource, reqparse
 from flask_cors import CORS
 from flask_session import Session
+from flask_login import login_required, current_user, login_user, logout_user
 from config import Config
 import bcrypt
-from models import db, User
+from models import db, login_manager, User
 
 # defining flask application
 app = Flask(__name__)
@@ -13,6 +14,7 @@ app.config.from_object(Config)
 db.init_app(app)
 CORS(app, supports_credentials=True)
 server_session = Session(app)
+login_manager.init_app(app)
 
 # defining arguments
 registration_args = reqparse.RequestParser()
@@ -57,29 +59,25 @@ class Validation(Resource):
 class Login(Resource):
     def post(self):
         args = login_args.parse_args()
-        u = User.query.filter_by(email=args['email']).first()
+        u = User.query.filter_by(email=args['email']).one_or_none()
         if not u or not bcrypt.checkpw(args['password'].encode(), u.password):
             return {"error": "ACCESS_DENIED"}, 401
         else:
-            session["user_id"] = u.id
+            login_user(u)
             return {"response": "ACCESS_ALLOWED"}, 200
 
 
 class Logout(Resource):
+    @login_required
     def post(self):
-        user_id = session.get('user_id')
-        if not user_id:
-            return {"error": "Unauthorized"}
-        session.pop('user_id')
-        return {"response": "Successfuly logged out"}
+        logout_user()
+        return {"response": "Successfuly logged out"}, 200
         
 
 class CheckIfLoggedIn(Resource):
+    @login_required
     def get(self):
-        user_id = session.get('user_id')
-        if not user_id:
-            return {"response": "You are not logged in :("}
-        u = User.query.filter_by(id=user_id).first()
+        u = current_user
         return {"response": "You are logged in! :)", "email": u.email, "name": u.name}
 
 

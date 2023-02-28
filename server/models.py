@@ -1,13 +1,14 @@
-#from app import db
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin
 from datetime import datetime
 import secrets
 import bcrypt
 from mail import validation_mail
 
 db = SQLAlchemy()
+login_manager = LoginManager()
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     password = db.Column(db.String(255), nullable=False)
@@ -37,7 +38,11 @@ class User(db.Model):
   
     def __repr__(self):
         return f'<User id: {self.id}, email: {self.email}>'
-    
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.filter_by(id=user_id).one_or_none()
+
 
 class Application(db.Model):
     id = db.Column(db.Integer, primary_key=True)
