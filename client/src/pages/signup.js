@@ -6,8 +6,6 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import schema from '../helper/validator';
 
-const API_URI = process.env.apiURL;
-
 export default function SignUp() {
     const router = useRouter();
     const { register, formState, handleSubmit, getValues } = useForm(
@@ -33,7 +31,7 @@ export default function SignUp() {
         // function for submitting data to the server;
     const onSubmit = async data => {
         if (schema.validate(data)) {
-            const response = await fetch(`${API_URI}/register`, {
+            const response = await fetch(`api/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

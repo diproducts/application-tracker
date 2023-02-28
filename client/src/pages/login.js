@@ -6,8 +6,6 @@ import Footer from '../components/footer';
 import styles from '@/styles/Login.module.css';
 import schema from '../helper/validator';
 
-const API_URI = process.env.apiURL;
-
 export default function Login() {
     const router = useRouter();
     const { register, formState, handleSubmit } = useForm(
@@ -26,7 +24,7 @@ export default function Login() {
     // function for submitting data to the server;
     const onSubmit = async data => {
         if (schema.validate(data, "login")) {
-            const response = await fetch(`${API_URI}/login`, {
+            const response = await fetch(`api/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

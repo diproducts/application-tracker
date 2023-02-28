@@ -21,6 +21,7 @@ registration_args = reqparse.RequestParser()
 registration_args.add_argument('email', type=str, help='Email of the user')
 registration_args.add_argument('password', type=str, help='Password of the user')
 registration_args.add_argument('name', type=str, help='Name of the user')
+registration_args.add_argument('remember', type=bool, help='Do we need to remember the user')
 
 login_args = reqparse.RequestParser()
 login_args.add_argument('email', type=str, help='Email of the user')
@@ -59,11 +60,13 @@ class Validation(Resource):
 class Login(Resource):
     def post(self):
         args = login_args.parse_args()
+        if not args['remember']:
+            args['remember'] = True
         u = User.query.filter_by(email=args['email']).one_or_none()
         if not u or not bcrypt.checkpw(args['password'].encode(), u.password):
             return {"error": "ACCESS_DENIED"}, 401
         else:
-            login_user(u)
+            login_user(u, remember=args['remember'])
             return {"response": "ACCESS_ALLOWED"}, 200
 
 
