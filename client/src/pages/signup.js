@@ -102,7 +102,7 @@ export default function SignUp() {
                 <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                     <span className="span">aT</span>
                     <h1>Sign Up</h1>
-                    <label>
+                    <label className={styles.label}>
                         username:
                         <input
                             className={inputStyles.name} 
@@ -110,7 +110,7 @@ export default function SignUp() {
                             })}
                         />
                     </label>
-                    <label>
+                    <label className={styles.label}>
                         email:
                         <input
                             className={inputStyles.email} 
@@ -118,7 +118,7 @@ export default function SignUp() {
                             })}
                         />
                     </label>
-                    <label>
+                    <label className={styles.label}>
                         password:
                         <input {...register('password', 
                                 { required: true, onChange: (e) => handleChange(e) })} 
@@ -127,7 +127,7 @@ export default function SignUp() {
                         />
                         <p className={styles.passwordText}>8+ characters: uppercase, lowercase, numbers</p>
                     </label>
-                    <label>
+                    <label className={styles.label}>
                         confirm password:
                         <input {...register('passwordConfirmed', 
                                 { required: true, onChange: (e) => handleChange(e) })} 

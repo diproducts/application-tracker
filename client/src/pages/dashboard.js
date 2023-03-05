@@ -2,22 +2,31 @@ import Footer from '../components/footer';
 import Navbar from '../components/navbar';
 import Head from 'next/head';
 import styles from '@/styles/Dashboard.module.css';
-import {useEffect} from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router'
 
 export default function Dashboard(props) {
+    const router = useRouter();
+    const [name, setName] = useState();
 
     // temporary testing function
     useEffect(() => {
         const fetchData = async() => {
             const response = await fetch(`api/check_if_logged_in`);
+            if (!response.ok) {
+              router.push('/login');
+              return;
+            }
             const data = await response.json();
-            console.log(data);
+            setName(data.name);
         }
         fetchData();
     }, [])
 
-
-    return (
+    if (!name) {
+      return <></>
+    } else {
+      return (
         <>
             <Head>
                 <title>Dashboard | Application Tracker</title>
@@ -31,15 +40,5 @@ export default function Dashboard(props) {
           <Footer />
         </>
     )
+    }
 }
-
-// export async function getStaticProps() {
-//     const response = await fetch(`${API_URI}/check_if_logged_in`);
-//     const data = await response.json();
-
-//     return {
-//       props: {
-//         data: data.response
-//       }
-//     }
-//   }

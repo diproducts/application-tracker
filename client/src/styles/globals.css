@@ -150,6 +150,14 @@ a {
   text-align: left;
 }
 
+.a-logout {
+  margin-right: 20px;
+}
+
+.a-logout:hover {
+  cursor: pointer;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
