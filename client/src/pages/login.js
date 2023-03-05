@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import Head from 'next/head';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 import Footer from '../components/footer';
 import styles from '@/styles/Login.module.css';
 import schema from '../helper/validator';
@@ -13,7 +13,8 @@ export default function Login() {
         mode: 'onSubmit',
         defaultValues: {
                 email: '',
-                password: ''
+                password: '',
+                remember: false
               },
     });
 
@@ -78,7 +79,7 @@ export default function Login() {
                 <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                     <span className="span">aT</span>
                     <h1>Log in</h1>
-                    <label>
+                    <label className={styles.label}>
                         email:
                         <input
                             className={emailClasses} 
@@ -86,7 +87,7 @@ export default function Login() {
                             })}
                         />
                     </label>
-                    <label>
+                    <label className={styles.label}>
                         password:
                         <input {...register('password', 
                                 { required: true, onChange: (e) => handleChange(e) })} 
@@ -94,6 +95,10 @@ export default function Login() {
                             className={passwordClasses} 
                         />
                     </label>
+                    <div className={styles.rememberGroup}>
+                        <input {...register('remember')} name='remember' type='checkbox' />
+                        <label htmlFor='remember'>remember me</label>
+                    </div>
                     <div className={styles.submitGroup}>
                         <input className={styles.submit} disabled={!formState.isValid} type='submit' value="LOG IN" />
                         <p>Forgot password?</p>
