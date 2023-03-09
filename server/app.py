@@ -4,8 +4,7 @@ from flask_cors import CORS
 from flask_session import Session
 from flask_login import login_required, current_user, login_user, logout_user
 from config import Config
-import bcrypt
-from models import db, login_manager, User
+from models import db, login_manager, bcrypt, User
 
 # defining flask application
 app = Flask(__name__)
@@ -15,13 +14,13 @@ db.init_app(app)
 CORS(app, supports_credentials=True)
 server_session = Session(app)
 login_manager.init_app(app)
+bcrypt.init_app(app)
 
-# defining arguments
+# defining argument parsers
 registration_args = reqparse.RequestParser()
 registration_args.add_argument('email', type=str, help='Email of the user')
 registration_args.add_argument('password', type=str, help='Password of the user')
 registration_args.add_argument('name', type=str, help='Name of the user')
-registration_args.add_argument('remember', type=bool, help='Do we need to remember the user')
 
 login_args = reqparse.RequestParser()
 login_args.add_argument('email', type=str, help='Email of the user')
@@ -40,6 +39,7 @@ class Registration(Resource):
             db.session.add(u)
             db.session.commit()
             #u.send_validation_link()
+            login_user(u)
             return {"response": "USER_CREATED", 'user_id': u.id}, 201
         except Exception as e:
             return {"error": str(e)}, 400
@@ -60,14 +60,12 @@ class Validation(Resource):
 class Login(Resource):
     def post(self):
         args = login_args.parse_args()
-        if not args['remember']:
-            args['remember'] = True
-        u = User.query.filter_by(email=args['email']).one_or_none()
-        if not u or not bcrypt.checkpw(args['password'].encode(), u.password):
-            return {"error": "ACCESS_DENIED"}, 401
-        else:
+        u = User.query.filter_by(email=args['email']).first()
+        if u and bcrypt.check_password_hash(u.password, args['password']):
             login_user(u, remember=args['remember'])
             return {"response": "ACCESS_ALLOWED"}, 200
+        else:
+            return {"error": "ACCESS_DENIED"}, 401            
 
 
 class Logout(Resource):
@@ -94,16 +92,6 @@ class GetUsers(Resource):
         return json
 
 
-class DeleteUsers(Resource):
-    def post(self):
-        key_list = list(session.keys())
-        for key in key_list:
-            session.pop(key)
-        db.session.query(User).delete()
-        db.session.commit()
-        return {"response": "All users successfully deleted"}
-
-
 api.add_resource(Registration, '/api/register')
 api.add_resource(Validation, '/api/confirm_mail/<string:token>')
 api.add_resource(Login, '/api/login')
@@ -111,7 +99,6 @@ api.add_resource(Logout, '/api/logout')
 api.add_resource(CheckIfLoggedIn, '/api/check_if_logged_in')
 # DEBUG resources
 api.add_resource(GetUsers, '/api/get_users')
-api.add_resource(DeleteUsers, '/api/delete_users')
 
 
 if __name__ == '__main__':

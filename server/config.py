@@ -1,15 +1,19 @@
-import os
 from dotenv import dotenv_values
 import redis
 
-BASE_DIR = os.path.dirname(os.path.abspath(__name__))
-
+env = dotenv_values(".env")
 
 class Config:
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'database.db')
+    SQLALCHEMY_DATABASE_URI = 'postgresql://{}:{}@{}:{}/{}'.format(
+        env['DATABASE_USERNAME'],
+        env['DATABASE_PASSWORD'],
+        env['DATABASE_HOST'],
+        env['DATABASE_PORT'],
+        env['DATABASE_USERNAME']
+    )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = dotenv_values(".env")['SECRET_KEY']
+    SECRET_KEY = env['SECRET_KEY']
 
     SESSION_TYPE = "redis"
     SESSION_PERMANENT = False
