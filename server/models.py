@@ -1,12 +1,14 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin
+from flask_bcrypt import Bcrypt
+from flask_mail import Mail
 from datetime import datetime
 import secrets
-import bcrypt
-from mail import validation_mail
 
 db = SQLAlchemy()
 login_manager = LoginManager()
+bcrypt = Bcrypt()
+mail = Mail()
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -16,25 +18,19 @@ class User(db.Model, UserMixin):
     registration_date = db.Column(db.DateTime, default=datetime.utcnow)
     status = db.Column(db.String(255), nullable=True)
     email_confirmed = db.Column(db.Boolean, nullable=False, default=False)
-    secret_key = db.Column(db.String(16), nullable=False)
+    secret_key = db.Column(db.String(32), nullable=False)
     
     applications = db.relationship(
         'Application', backref='user', lazy='select')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.generate_secret_key()
-        self.generate_password_hash()
-    
-    def generate_secret_key(self):
         self.secret_key = secrets.token_hex(16)
-
-    def generate_password_hash(self):
-        self.password = bcrypt.hashpw(self.password.encode(), bcrypt.gensalt())
+        self.password = bcrypt.generate_password_hash(self.password).decode('utf-8')
     
     def send_validation_link(self):
         self.token = self.secret_key + '-' + str(self.id)
-        validation_mail(self.email, self.token)
+        #validation_mail(self.email, self.token) redo with flask-mail
   
     def __repr__(self):
         return f'<User id: {self.id}, email: {self.email}>'
