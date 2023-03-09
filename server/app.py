@@ -1,10 +1,10 @@
-from flask import Flask, session
+from flask import Flask
 from flask_restful import Api, Resource, reqparse
 from flask_cors import CORS
 from flask_session import Session
 from flask_login import login_required, current_user, login_user, logout_user
 from config import Config
-from models import db, login_manager, bcrypt, User
+from models import db, login_manager, bcrypt, mail, User
 
 # defining flask application
 app = Flask(__name__)
@@ -15,6 +15,7 @@ CORS(app, supports_credentials=True)
 server_session = Session(app)
 login_manager.init_app(app)
 bcrypt.init_app(app)
+mail.init_app(app)
 
 # defining argument parsers
 registration_args = reqparse.RequestParser()

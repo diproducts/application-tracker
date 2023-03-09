@@ -1,13 +1,14 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin
 from flask_bcrypt import Bcrypt
+from flask_mail import Mail
 from datetime import datetime
 import secrets
-from mail import validation_mail
 
 db = SQLAlchemy()
 login_manager = LoginManager()
 bcrypt = Bcrypt()
+mail = Mail()
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -29,7 +30,7 @@ class User(db.Model, UserMixin):
     
     def send_validation_link(self):
         self.token = self.secret_key + '-' + str(self.id)
-        validation_mail(self.email, self.token)
+        #validation_mail(self.email, self.token) redo with flask-mail
   
     def __repr__(self):
         return f'<User id: {self.id}, email: {self.email}>'

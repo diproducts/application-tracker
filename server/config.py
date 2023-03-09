@@ -19,3 +19,10 @@ class Config:
     SESSION_PERMANENT = False
     SESSION_USE_SIGNER = True
     SESSION_REDIS = redis.from_url("redis://127.0.0.1:6379")
+
+    MAIL_SERVER = env['MAIL_SERVER']
+    MAIL_PORT = env['MAIL_PORT']
+    MAIL_USE_TLS = True
+    MAIL_USERNAME = env['MAIL_USERNAME']
+    MAIL_PASSWORD = env['MAIL_PASSWORD']
+    MAIL_DEFAULT_SENDER = ('DiProducts', env['MAIL_DEFAULT_SENDER'])
