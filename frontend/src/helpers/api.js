@@ -13,16 +13,42 @@ export const checkUser = async () => {
         const response = await client.get("auth/user/");
         return response;
     } catch (err) {
-        return { message: 'Network error' }
+        return false;
     }
 }
 
 export const register = async (data) => {
-    console.log('data', data)
     try {
         const response = await client.post("auth/register/", { name: data.name, password: data.password, email: data.email });
-        return response;
+        if (response.status === 201) return true;
     } catch (err) {
-        return { message: 'Network error' }
+        return false;
+    }
+}
+
+export const login = async (data) => {
+    try {
+        const response = await client.post("auth/login/",
+            {
+                email: data.email,
+                password: data.password
+            });
+        if (response.status === 200) return true;
+        else return false;
+    } catch (err) {
+        return false;
+    }
+}
+
+export const logout = async () => {
+    try {
+        const response = await client.post(
+            "auth/logout/",
+            { withCredentials: true }
+        );
+        if (response.status === 200) return true;
+        else return false;
+    } catch (err) {
+        return false;
     }
 }

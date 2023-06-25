@@ -3,7 +3,7 @@ import LogIn from '../components/Auth/Login';
 import SignUp from '../components/Auth/Signup';
 import '../static/Auth.css';
 
-export default function AuthContainer({ navigate }) {
+export default function AuthContainer() {
     const [mode, setMode] = useState({
         login: false,
         signup: true

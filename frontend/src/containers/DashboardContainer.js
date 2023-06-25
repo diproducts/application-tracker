@@ -1,7 +1,21 @@
+import { observer } from "mobx-react";
+import userStore from "../store/userStore";
+import { useNavigate } from "react-router-dom";
 
+const DashboardContainer = observer(() => {
+    const navigate = useNavigate();
 
-export default function DashboardContainer({ navigate }) {
+    const handleLogout = () => {
+        userStore.logoutUser();
+        userStore.setLogged(false);
+        navigate("/auth")
+    }
+
     return (
-        <main>hey loser</main>
+        <main>
+            <button onClick={handleLogout}>Let me out</button>
+        </main>
     )
-}
+});
+
+export default DashboardContainer;

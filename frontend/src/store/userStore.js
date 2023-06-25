@@ -1,24 +1,36 @@
 import { makeAutoObservable } from "mobx";
-import { checkUser, register } from '../helpers/api';
+import { checkUser, register, logout, login } from '../helpers/api';
 
 class UserStore {
-    name = '';
-    email = '';
-    password = '';
-    loggedIn = false;
+    isLogged = false;
 
     constructor() {
         makeAutoObservable(this, {}, { autoBind: true });
     }
 
+    setLogged(bool) {
+        this.isLogged = bool;
+    }
+
     async checkUser() {
-        checkUser()
-            .then(response => this.loggedIn = true)
-            .catch(err => console.log(err));
+        const logged = await checkUser();
+        if (logged) this.setLogged(true);
+        else this.setLogged(false);
     }
 
     async registerUser(data) {
-        register(data).then(response => console.log(response));
+        const response = await register(data);
+        return response;
+    }
+
+    async loginUser(data) {
+        const response = await login(data);
+        return response;
+    }
+
+    async logoutUser() {
+        const response = await logout();
+        return response;
     }
 }
 

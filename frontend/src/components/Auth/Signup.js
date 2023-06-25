@@ -2,15 +2,20 @@ import { useForm } from "react-hook-form";
 import schema from "../../helpers/validator";
 import { observer } from "mobx-react";
 import userStore from "../../store/userStore";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = observer(({ toggle }) => {
     const { register, handleSubmit, getValues } = useForm();
+    const navigate = useNavigate();
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         if (schema.validate(data)) {
-            const body = { name: data.name, password: data.password, email: data.email }
-            console.log(body)
-            userStore.registerUser(body);
+            const response = await userStore.registerUser(data);
+            if (!response) console.log('could not register');
+            else {
+                userStore.setLogged(true);
+                navigate("/dashboard")
+            }
         } else {
             console.log('could not validate')
         }
