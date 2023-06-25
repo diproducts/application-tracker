@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.border {
+    background-color: #7066E4;
+    height: 80px;
+    width: 10px;
+    margin: 10px;
+}
+
+.col {
+    max-width: 500px;
+}
+
+.col h1 {
+    font-size: 80px;
+    color: #7066E4;
+}
