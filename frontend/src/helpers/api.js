@@ -10,7 +10,7 @@ const client = axios.create({
 
 export const checkUser = async () => {
     try {
-        const response = await client.get("auth/user/");
+        const response = await client.get("api/auth/user/");
         return response;
     } catch (err) {
         return false;
@@ -19,7 +19,7 @@ export const checkUser = async () => {
 
 export const register = async (data) => {
     try {
-        const response = await client.post("auth/register/", { name: data.name, password: data.password, email: data.email });
+        const response = await client.post("api/auth/register/", { name: data.name, password: data.password, email: data.email });
         if (response.status === 201) return true;
     } catch (err) {
         return false;
@@ -28,7 +28,7 @@ export const register = async (data) => {
 
 export const login = async (data) => {
     try {
-        const response = await client.post("auth/login/",
+        const response = await client.post("api/auth/login/",
             {
                 email: data.email,
                 password: data.password
@@ -43,7 +43,7 @@ export const login = async (data) => {
 export const logout = async () => {
     try {
         const response = await client.post(
-            "auth/logout/",
+            "api/auth/logout/",
             { withCredentials: true }
         );
         if (response.status === 200) return true;
