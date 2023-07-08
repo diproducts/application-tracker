@@ -3,21 +3,21 @@ from rest_framework import serializers
 
 from .models import Application, ApplicationPhase
 
-class ApplicationPhaseInlineSerializer(serializers.ModelSerializer):
+class ApplicationPhaseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ApplicationPhase
         fields = [
+            'id',
             'name',
             'date',
             'contacts',
             'notes',
-            'offered_salary'
         ]
         
 
 class ApplicationSerializer(serializers.ModelSerializer):
-    phases = ApplicationPhaseInlineSerializer(read_only=True, many=True)
+    phases = ApplicationPhaseSerializer(read_only=True, many=True)
 
     class Meta:
         model = Application
@@ -25,7 +25,9 @@ class ApplicationSerializer(serializers.ModelSerializer):
             'id',
             'company_name',
             'position',
+            'url',
             'cv',
             'cover_letter',
-            'phases'
+            'offered_salary',
+            'phases',
         ]

@@ -16,7 +16,7 @@ environ.Env.read_env(BASE_DIR / '.env')
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = env.bool('DEBUG')
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
@@ -130,7 +130,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = 'django_static/'
+
+STATIC_ROOT = BASE_DIR / 'django_static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -151,16 +153,10 @@ REST_FRAMEWORK = {
     ],
 }
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-]
+CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS')
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-]
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS')
 
 # CSRF_COOKIE_SAMESITE = 'Strict'
 # SESSION_COOKIE_SAMESITE = 'Strict'
@@ -174,10 +170,12 @@ CSRF_TRUSTED_ORIGINS = [
 # S3 storage
 
 DEFAULT_FILE_STORAGE = 'core.s3_storage.MediaStorage'
-AWS_S3_ENDPOINT_URL = 'https://storage.yandexcloud.net'
 AWS_S3_ACCESS_KEY_ID = env('AWS_S3_ACCESS_KEY_ID')
 AWS_S3_SECRET_ACCESS_KEY = env('AWS_S3_SECRET_ACCESS_KEY')
-AWS_QUERYSTRING_AUTH = False
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = env('AWS_S3_REGION_NAME')
+AWS_S3_SIGNATURE_VERSION = env('AWS_S3_SIGNATURE_VERSION')
+AWS_S3_FILE_OVERWRITE = False
 
 # Email
 if DEBUG:
@@ -192,3 +190,17 @@ else:
     EMAIL_USE_TLS = env('EMAIL_USE_TLS')
 
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
+
+
+# LOGGING = {
+#     'version': 1,
+#     'handlers': {
+#         'console': {'class': 'logging.StreamHandler'}
+#     },
+#     'loggers': {
+#         'django.db.backends': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG'
+#         }
+#     }
+# }
