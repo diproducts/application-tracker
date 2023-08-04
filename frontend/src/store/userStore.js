@@ -13,6 +13,7 @@ class UserStore {
     }
 
     async checkUser() {
+        console.log('in userStore')
         const logged = await checkUser();
         if (logged) this.setLogged(true);
         else this.setLogged(false);

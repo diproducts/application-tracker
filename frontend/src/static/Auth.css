@@ -1,21 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&display=swap');
 
-main {
+.main-auth {
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(180deg, #F1E7FF 0%, #FFF0F5 100%);
     display: flex;
+    background: linear-gradient(180deg, #F1E7FF 0%, #FFF0F5 100%);
     justify-content: center;
     align-items: center;
-}
-
-h1 {
-    align-self: flex-start;
-    color: #7066E4;
-    margin-left: 24px;
-    font-size: 24px;
-    font-family: Noto Sans;
-    font-weight: 500;
 }
 
 .container {
@@ -52,7 +44,7 @@ input {
     align-self: center;
     border-radius: 7px;
     border: 0.5px solid #D7D7D7;
-    background:  #F9F9F9;
+    background: #F9F9F9;
     margin-bottom: 25px;
     margin-top: 5px;
 }
@@ -74,12 +66,4 @@ input {
     font-size: 14px;
     font-family: 'Inter', sans-serif;
     border-radius: 7px;
-}
-
-footer {
-    width: 100vw;
-    position: fixed;
-    bottom: 0;
-    height: 50px;
-    background: rgba(102, 102, 102, 0.80);
 }

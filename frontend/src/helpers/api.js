@@ -11,6 +11,7 @@ const client = axios.create({
 export const checkUser = async () => {
     try {
         const response = await client.get("auth/user/");
+        console.log(response, 'response in checkUser')
         return response;
     } catch (err) {
         return false;

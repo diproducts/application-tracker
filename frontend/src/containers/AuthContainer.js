@@ -19,9 +19,8 @@ export default function AuthContainer() {
     }
 
     return (
-        <main>
+        <main className="main-auth">
             {mode.login ? <LogIn toggle={toggle} /> : <SignUp toggle={toggle} />}
-            <footer></footer>
         </main>
     )
 }
