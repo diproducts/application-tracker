@@ -1,16 +1,27 @@
 import atIcon from "../assets/aT.png";
+import { useNavigate } from "react-router-dom";
+
 
 const Header = ({ handleLogout }) => {
+    const navigate = useNavigate();
+
+    const handleAppClick = () => {
+        navigate("./applications");
+    }
+
+    const goToMain = () => {
+        navigate("./");
+    }
 
     return (
         <header>
             <div style={{ display: "flex", gap: "44px" }}>
-                <img className="logo" src={atIcon} alt="logo" />
+                <img onClick={goToMain} className="logo" src={atIcon} alt="logo" />
                 <ul className="navbar-menu">
-                    <li><a>My Openings</a></li>
-                    <li><a>Resumes & CLs</a></li>
-                    <li><a>Out Blog</a></li>
-                    <li><a>My Applications</a></li>
+                    <li>My Openings</li>
+                    <li>Resumes & CLs</li>
+                    <li>Out Blog</li>
+                    <li onClick={handleAppClick}>My Applications</li>
                 </ul>
             </div>
             <div><p className="logout" onClick={handleLogout}>Logout</p></div>

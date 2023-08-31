@@ -11,7 +11,6 @@ const client = axios.create({
 export const checkUser = async () => {
     try {
         const response = await client.get("auth/user/");
-        console.log(response, 'response in checkUser')
         return response;
     } catch (err) {
         return false;
@@ -20,7 +19,12 @@ export const checkUser = async () => {
 
 export const register = async (data) => {
     try {
-        const response = await client.post("auth/register/", { name: data.name, password: data.password, email: data.email });
+        const response = await client.post("auth/register/",
+            {
+                name: data.name,
+                password: data.password,
+                email: data.email
+            });
         if (response.status === 201) return true;
     } catch (err) {
         return false;
@@ -46,6 +50,35 @@ export const logout = async () => {
         const response = await client.post(
             "auth/logout/",
             { withCredentials: true }
+        );
+        if (response.status === 200) return true;
+        else return false;
+    } catch (err) {
+        return false;
+    }
+}
+
+export const newApp = async (data, formData) => {
+    try {
+        const response = await client.post(
+            "applications/",
+            formData,
+            data
+        );
+        if (response.status === 200) {
+            return response;
+        }
+        return false;
+    } catch (err) {
+        return false;
+    }
+}
+
+export const newPhase = async (data, id) => {
+    try {
+        const response = await client.post(
+            `applications/${id}/phases/`,
+            data
         );
         if (response.status === 200) return true;
         else return false;

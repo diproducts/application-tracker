@@ -3,12 +3,7 @@ import userStore from "../store/userStore";
 import { useNavigate, Routes, Route } from "react-router-dom";
 import Header from "../components/Header";
 import DashboardMain from "../components/Dashboard/DashboardMain";
-
-const Test = () => {
-    return (
-        <div>test</div>
-    )
-}
+import Applications from "./Applications";
 
 const DashboardContainer = observer(() => {
     const navigate = useNavigate();
@@ -18,15 +13,15 @@ const DashboardContainer = observer(() => {
         navigate("/auth")
     }
     return (
-        <>
+        <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column" }}>
             <Header handleLogout={handleLogout} />
             <main className="main-dashboard">
                 <Routes>
                     <Route path="/" element={<DashboardMain />} />
-                    <Route path="/test" element={<Test />} />
+                    <Route path="/applications" element={<Applications />} />
                 </Routes>
             </main>
-        </>
+        </div>
     )
 });
 
