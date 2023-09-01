@@ -481,6 +481,10 @@ tbody tr:nth-child(even) {
   box-sizing: border-box;
 }
 
+.input-add {
+  padding: 0px 5px;
+}
+
 .upload-title {
   color: #000;
   margin: 0;
@@ -519,6 +523,18 @@ tbody tr:nth-child(even) {
   font-weight: 500;
   line-height: normal;
   padding: 6px 25px;
+}
+
+textarea {
+  padding: 5px;
+  width: 100%;
+  align-self: center;
+  border-radius: 7px;
+  border: 0.5px solid #D7D7D7;
+  background: #F9F9F9;
+  margin-bottom: 25px;
+  margin-top: 5px;
+  resize: none;
 }
 
 @keyframes App-logo-spin {

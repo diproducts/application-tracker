@@ -8,6 +8,18 @@ const client = axios.create({
     baseURL: "http://127.0.0.1:8000"
 });
 
+client.interceptors.request.use(
+    (config) => {
+        if (config.data instanceof FormData) {
+            config.headers['Content-Type'] = 'multipart/form-data';
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
 export const checkUser = async () => {
     try {
         const response = await client.get("auth/user/");
@@ -59,11 +71,16 @@ export const logout = async () => {
 }
 
 export const newApp = async (data, formData) => {
+    console.log(data)
     try {
         const response = await client.post(
-            "applications/",
-            formData,
-            data
+            "api/applications/",
+            {
+                ...data,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
         );
         if (response.status === 200) {
             return response;

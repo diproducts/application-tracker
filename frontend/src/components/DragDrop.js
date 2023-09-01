@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const DragDrop = ({ mode }) => {
+const DragDrop = ({ mode, selectedFile, setSelectedFile }) => {
     const title = mode === "resume"
         ? "upload the resume used for application:"
         : "upload the cover letter used for application:"
@@ -9,16 +9,7 @@ const DragDrop = ({ mode }) => {
         ? "linear-gradient(136deg, #E2EEFF, rgba(151, 193, 255, 0.02))"
         : "linear-gradient(136deg, #EAE2FF 0%, rgba(165, 151, 255, 0.02) 100%)"
 
-    const [selectedFile, setSelectedFile] = useState(null);
     const [isDragging, setIsDragging] = useState(false);
-
-    const handleFileUpload = () => {
-        if (selectedFile) {
-
-        } else {
-            console.log('No file selected for upload.');
-        }
-    };
 
     const handleChange = (event) => {
         if (event.target.files) {
@@ -32,22 +23,28 @@ const DragDrop = ({ mode }) => {
         setIsDragging(true);
     };
 
-    const handleDragLeave = () => {
-        setIsDragging(false);
+    const handleDragLeave = (event) => {
+        if (!event.relatedTarget || !event.currentTarget.contains(event.relatedTarget)) {
+            setIsDragging(false);
+        }
     };
 
     const handleDrop = (event) => {
         event.preventDefault();
         setIsDragging(false);
         const file = event.dataTransfer.files[0];
+        if (file.size > 5000000) {
+            return;
+        }
+        console.log(file)
         setSelectedFile(file);
     };
 
     return (
-        <div className="upload-container">
+        <div className={`upload-container  ${isDragging && "drag-over"}`}>
             <h3 className="upload-title">{title}</h3>
             <div
-                className={`drag-drop-area ${isDragging && "drag-over"}`}
+                className={`drag-drop-area`}
                 style={{ background }}
                 onDragEnter={handleDragEnter}
                 onDragLeave={handleDragLeave}

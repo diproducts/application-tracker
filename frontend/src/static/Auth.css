@@ -2,8 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&display=swap');
 
 .main-auth {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     display: flex;
     background: linear-gradient(180deg, #F1E7FF 0%, #FFF0F5 100%);
     justify-content: center;
@@ -12,7 +12,7 @@
 
 .container {
     background: rgba(255, 255, 255, 0.37);
-    height: 100vh;
+    height: 100%;
     width: 340px;
     display: flex;
     flex-direction: column;
@@ -47,6 +47,7 @@ input {
     background: #F9F9F9;
     margin-bottom: 25px;
     margin-top: 5px;
+    resize: none;
 }
 
 .buttons {

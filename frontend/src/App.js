@@ -24,7 +24,7 @@ const App = observer(() => {
   if (isLoading) {
     return;
   } else return (
-    <div style={{ width: "100%", height: "100%" }}>
+    <div style={{ height: "100vh", width: "100vw" }}>
       <Routes>
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={userStore.isLogged ? <Navigate to="/dashboard" /> : <Navigate to="/auth" />} />
