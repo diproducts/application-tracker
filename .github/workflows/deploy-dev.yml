@@ -6,7 +6,7 @@ name: Deploy dev
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "github-actions" ]
+    branches: [ "dev" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -30,6 +30,6 @@ jobs:
           port: 22
           script: |
             cd /opt/qa/application-tracker
-            git pull origin github-actions
-            git checkout github-actions
+            git pull origin dev
+            git checkout dev
             ./start_dev_server.sh
