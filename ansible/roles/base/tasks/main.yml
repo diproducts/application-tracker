@@ -3,4 +3,4 @@
     repo: "{{ repo_url }}/{{ repo_name }}.git"
     dest: "{{ repo_dir }}"
     single_branch: yes
-    version: "{{ branch }}"
+    version: "{{ repo_branch }}"
