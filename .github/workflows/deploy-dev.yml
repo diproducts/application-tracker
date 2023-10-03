@@ -18,6 +18,7 @@ jobs:
       REPO_URL: ${{ vars.REPO_URL }}
       REPO_NAME: ${{ vars.REPO_NAME }}
       REPO_DIR: ${{ vars.REPO_DIR }}
+      REPO_BRANCH: github-actions
       # DJANGO
       DEBUG: ${{ vars.DEBUG }}
       SECRET_KEY: ${{ secrets.SECRET_KEY }}

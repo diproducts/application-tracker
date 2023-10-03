@@ -7,5 +7,5 @@
     mode: 0644
 
 - name: Enable nginx config
-  shell: ln -s /etc/nginx/sites-available/application-tracker /etc/nginx/sites-enabled
+  shell: ln -sf /etc/nginx/sites-available/application-tracker /etc/nginx/sites-enabled
   notify: reload nginx service
