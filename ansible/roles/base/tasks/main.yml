@@ -1,0 +1,8 @@
+- name: Ensure SSH key with passphrase is used
+  set_fact:
+    ansible_ssh_common_args: "-o IdentitiesOnly=yes -i ~/.ssh/id_rsa -i ~/.ssh/passphrase"
+
+- name: Git checkout
+  ansible.builtin.git:
+    repo: "{{ repo_url }}/{{ repo_name }}.git"
+    dest: "{{ repo_dir }}"

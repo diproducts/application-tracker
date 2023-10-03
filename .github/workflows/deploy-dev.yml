@@ -1,36 +1,62 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Deploy dev
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "dev" ]
+    branches: [ "github-actions" ]
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+  deploy:
+    environment:
+      name: Development
+    env:
+      # SSH
+      SSH_PRIVATE_KEY: ${{ secretes.SSH_PRIVATE_KEY }}
+      SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+      # REPO
+      REPO_URL: ${{ vars.REPO_URL }}
+      REPO_NAME: ${{ vars.REPO_NAME }}
+      REPO_DIR: ${{ vars.REPO_DIR }}
+      # DJANGO
+      DEBUG: ${{ vars.DEBUG }}
+      SECRET_KEY: ${{ secretes.SECRET_KEY }}
+      DOMAIN: ${{ secretes.DOMAIN }}
+      BASE_URL: ${{ secretes.BASE_URL }}
+      # S3 STORAGE
+      AWS_S3_ACCESS_KEY_ID: ${{ secretes.AWS_S3_ACCESS_KEY_ID }}
+      AWS_S3_SECRET_ACCESS_KEY: ${{ secretes.AWS_S3_SECRET_ACCESS_KEY }}
+      AWS_STORAGE_BUCKET_NAME: ${{ secretes.AWS_STORAGE_BUCKET_NAME }}
+      AWS_S3_REGION_NAME: ${{ secretes.AWS_S3_REGION_NAME }}
+      AWS_S3_SIGNATURE_VERSION: ${{ secretes.AWS_S3_SIGNATURE_VERSION }}
+      # EMAIL
+      EMAIL_HOST: ${{ secretes.EMAIL_HOST }}
+      EMAIL_PORT: ${{ secretes.EMAIL_PORT }}
+      EMAIL_HOST_USER: ${{ secretes.EMAIL_HOST_USER }}
+      EMAIL_HOST_PASSWORD: ${{ secretes.EMAIL_HOST_PASSWORD }}
+      EMAIL_USE_TLS: ${{ secretes.EMAIL_USE_TLS }}
+      DEFAULT_FROM_EMAIL: ${{ secretes.DEFAULT_FROM_EMAIL }}
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+
+    runs-on: ubuntu-latest
     steps:
-      - name: Deploy dev using SSH
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          passphrase: ${{ secrets.PASSPHRASE }}
-          port: 22
-          script: |
-            cd /opt/qa/application-tracker
-            git pull origin dev
-            git checkout dev
-            ./start_dev_server.sh
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+        
+      - name: Set up SSH passphrase
+        run: |
+          echo "$SSH_PASSPHRASE" > ~/.ssh/passphrase
+ 
+      - name: Run Ansible playbook
+        run: |
+          cd ansible
+          ansible-playbook deploy-dev.yml

@@ -1,0 +1,3 @@
+repo_url: "{{ lookup('env', 'REPO_URL') }}"
+repo_name: "{{ lookup('env', 'REPO_NAME') }}"
+repo_dir: "{{ lookup('env', 'REPO_DIR') }}"

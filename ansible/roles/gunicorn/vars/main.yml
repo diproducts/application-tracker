@@ -1,0 +1,3 @@
+username: "{{ lookup('env', 'SSH_USERNAME') }}"
+project_path: "{{ lookup('env', 'REPO_DIR') }}"
+virtualenv_dir: .venv

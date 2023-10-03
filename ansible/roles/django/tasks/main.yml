@@ -1,0 +1,28 @@
+- name: Copy a .env file in the project root folder
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ project_path }}/.env"
+
+- name: Install requirements.txt
+  ansible.builtin.pip: 
+    chdir: "{{ project_path }}"
+    requirements: "requirements.txt"
+    virtualenv: "{{ virtualenv_dir }}"
+
+- name: Migrate database
+  community.general.django_manage:
+    command: migrate
+    project_path: "{{ project_path }}"
+    virtualenv: "{{ project_path }}/{{ virtualenv_dir }}"
+
+- name: Migrate database
+  community.general.django_manage:
+    command: migrate
+    project_path: "{{ project_path }}"
+    virtualenv: "{{ project_path }}/{{ virtualenv_dir }}"
+
+- name: Collect static
+  community.general.django_manage:
+    command: collectstatic
+    project_path: "{{ project_path }}"
+    virtualenv: "{{ project_path }}/{{ virtualenv_dir }}"

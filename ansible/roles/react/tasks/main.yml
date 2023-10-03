@@ -1,0 +1,9 @@
+- name: Install react dependencies
+  command: npm install
+  args:
+    chdir: "{{ project_path }}/frontend"
+
+- name: Build
+  command: npm run build
+  args:
+    chdir: "{{ project_path }}/frontend"
