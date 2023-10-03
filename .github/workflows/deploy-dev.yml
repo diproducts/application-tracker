@@ -12,8 +12,6 @@ jobs:
       name: Development
     env:
       # SSH
-      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
       SSH_HOST: ${{ secrets.SSH_HOST }}
       SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
       # REPO
@@ -51,11 +49,10 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
+          ssh-keyscan "$SSH_HOST" >> ~/.ssh/known_hosts
+        env: 
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         
-      - name: Set up SSH passphrase
-        run: |
-          echo "$SSH_PASSPHRASE" > ~/.ssh/passphrase
- 
       - name: Run Ansible playbook
         run: |
           cd ansible
