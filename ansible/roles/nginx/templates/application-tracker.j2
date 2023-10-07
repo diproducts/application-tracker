@@ -13,15 +13,15 @@ server {
       proxy_pass http://unix:/run/gunicorn.sock;
     }
   
-    location /api/ {
+    location /api {
       try_files $uri @proxy_api;
     }
   
-    location /admin/ {
+    location /admin {
       try_files $uri @proxy_api;
     }
   
-    location /django_static/ {
+    location /django_static {
       autoindex on;
       alias {{ project_path }}/django_static/;
     }
