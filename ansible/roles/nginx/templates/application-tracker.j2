@@ -13,11 +13,6 @@ server {
       proxy_pass http://unix:/run/gunicorn.sock;
     }
   
-    location / {
-      root {{ project_path }}/frontend/build;
-      try_files $uri $uri/ /index.html;
-    }
-  
     location /api/ {
       try_files $uri @proxy_api;
     }
@@ -29,6 +24,11 @@ server {
     location /django_static/ {
       autoindex on;
       alias {{ project_path }}/django_static/;
+    }
+
+    location / {
+      root {{ project_path }}/frontend/build;
+      try_files $uri $uri/ /index.html;
     }
   
       listen 443 ssl; # managed by Certbot
