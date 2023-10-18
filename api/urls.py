@@ -1,15 +1,15 @@
 from django.urls import path
+from rest_framework_nested.routers import SimpleRouter, NestedSimpleRouter
 
-from .views import (
-    ApplicationListCreateAPIView,
-    ApplicationRetrieveAPIView,
-    ApplicationUpdateAPIView,
-    ApplicationDestroyAPIView,
-)
+from .views import ApplicationViewSet, ApplicationPhaseViewSet
 
-urlpatterns = [
-    path('applications/', ApplicationListCreateAPIView.as_view(), name='application-list'),
-    path('applications/<int:pk>/', ApplicationRetrieveAPIView.as_view(), name='application-detail'),
-    path('applications/<int:pk>/update/', ApplicationUpdateAPIView.as_view(), name='application-update'),
-    path('applications/<int:pk>/delete/', ApplicationDestroyAPIView.as_view(), name='application-delete'),
-]
+router = SimpleRouter()
+router.register(r'applications', ApplicationViewSet, basename='application')
+
+applications_router = NestedSimpleRouter(router, r'applications', lookup='application')
+applications_router.register(r'phases', ApplicationPhaseViewSet, basename='applicationphase')
+
+urlpatterns = []
+
+urlpatterns += router.urls
+urlpatterns += applications_router.urls

@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { newApp } from "../helpers/api";
+import { newApp, newPhase } from "../helpers/api";
 
 class ApplicationStore {
     applications = [];
@@ -21,19 +21,21 @@ class ApplicationStore {
         makeAutoObservable(this, {}, { autoBind: true });
     }
 
-    async postPhase({ id, name, date, contacts, notes }) {
+    async getApps() {
 
     }
 
-    async postApplication({ company_name, position, url, cv, cover_letter, date, contacts }) {
-        // {
-        //     "company_name": "Yandex", (обязательно)
-        //     "position": "Data Analyst", (обязательно)
-        //     "url": "https://yandex.ru/jobs/vacancies/"
-        //     "cv": файл,
-        //     "cover_letter": файл
-        //   }
+    async postPhase({ id, name, date, contacts, notes }) {
+        //  "date": "2023-06-28",
+        try {
+            await newPhase({ name, date, contacts, notes }, id);
+        } catch (err) {
+            console.log(err);
+            return false;
+        }
+    }
 
+    async postApplication({ company_name, position, url, cv, cover_letter, date, contacts, notes = "" }) {
         const data = {
             company_name,
             position,
@@ -42,20 +44,20 @@ class ApplicationStore {
         const formData = new FormData();
         if (cv) formData.append('cv', cv);
         if (cover_letter) formData.append('cover_letter', cover_letter);
-        if (!cv && !cover_letter) {
-            console.log('no files');
-            const response = await newApp(data);
+
+        try {
+            newApp(data, formData)
+                .then(applicationId => {
+                    if (applicationId) {
+                        this.postPhase({ id: applicationId, name: "applied", contacts, date, notes })
+                            .then(response => console.log(response))
+                    }
+                })
+                .catch((err) => console.log(err));
+        } catch (err) {
+            console.log(err);
+            return false;
         }
-
-        const response = await newApp(data, formData);
-        console.log(response);
-
-        // {
-        //     "name": "applied",
-        //     "date": "2023-06-28",
-        //     "contacts": "John from Google",
-        //     "notes": "I hope they hire me..."
-        // }
     }
 
 }

@@ -5,7 +5,7 @@ from .permissions import IsOwnerPermission
 
 
 class IsOwnerPermissionMixin:
-    permission_classes = [
+    permission_classes = (
         IsAuthenticated,
-        IsOwnerPermission
-    ]
+        IsOwnerPermission,
+    )

@@ -22,7 +22,7 @@ client.interceptors.request.use(
 
 export const checkUser = async () => {
     try {
-        const response = await client.get("auth/user/");
+        const response = await client.get("api/auth/user/");
         return response;
     } catch (err) {
         return false;
@@ -45,7 +45,7 @@ export const register = async (data) => {
 
 export const login = async (data) => {
     try {
-        const response = await client.post("auth/login/",
+        const response = await client.post("api/auth/login/",
             {
                 email: data.email,
                 password: data.password
@@ -60,7 +60,7 @@ export const login = async (data) => {
 export const logout = async () => {
     try {
         const response = await client.post(
-            "auth/logout/",
+            "api/auth/logout/",
             { withCredentials: true }
         );
         if (response.status === 200) return true;
@@ -71,10 +71,28 @@ export const logout = async () => {
 }
 
 export const newApp = async (data, formData) => {
-    console.log(data)
     try {
         const response = await client.post(
             "api/applications/",
+            formData,
+            data
+        );
+        console.log(response)
+        if (response.status === 201) {
+            return response.data.id;
+        }
+        return false;
+    } catch (err) {
+        console.log(err)
+        return false;
+    }
+}
+
+export const newPhase = async (data, id) => {
+    console.log(data);
+    try {
+        const response = await client.post(
+            `api/applications/${id}/phases/`,
             {
                 ...data,
                 headers: {
@@ -82,24 +100,12 @@ export const newApp = async (data, formData) => {
                 },
             }
         );
-        if (response.status === 200) {
-            return response;
-        }
-        return false;
+        console.log(response);
+        return response;
+        // if (response.status === 200) return true;
+        // else return false;
     } catch (err) {
         return false;
     }
 }
 
-export const newPhase = async (data, id) => {
-    try {
-        const response = await client.post(
-            `applications/${id}/phases/`,
-            data
-        );
-        if (response.status === 200) return true;
-        else return false;
-    } catch (err) {
-        return false;
-    }
-}

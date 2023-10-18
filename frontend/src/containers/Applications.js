@@ -1,5 +1,5 @@
 import AddApplication from "../components/PopUps/AddApplication";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Applications = () => {
     const [showAddModal, setShowAddModal] = useState(false);
