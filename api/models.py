@@ -28,6 +28,7 @@ class Application(models.Model):
     company_name = models.CharField(max_length=255)
     position = models.CharField(max_length=255)
     url = models.URLField(null=True, blank=True)
+    job_description = models.TextField(null=True, blank=True)
     cv = models.FileField('CV', null=True, blank=True, validators=[pdf_or_word_file_validator])
     cover_letter = models.FileField(null=True, blank=True, validators=[pdf_or_word_file_validator])
     offered_salary = models.PositiveIntegerField(help_text='Your offered salary', null=True, blank=True)

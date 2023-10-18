@@ -26,6 +26,7 @@ class ApplicationSerializer(serializers.ModelSerializer):
             'company_name',
             'position',
             'url',
+            'job_description',
             'cv',
             'cover_letter',
             'offered_salary',
