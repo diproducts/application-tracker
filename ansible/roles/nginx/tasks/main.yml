@@ -1,0 +1,11 @@
+- name: Copy the Nginx conf file
+  template:
+    src: application-tracker.j2
+    dest: /etc/nginx/sites-available/application-tracker
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Enable nginx config
+  shell: ln -sf /etc/nginx/sites-available/application-tracker /etc/nginx/sites-enabled
+  notify: reload nginx service

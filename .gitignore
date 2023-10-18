@@ -1,6 +1,7 @@
 .venv 
 .env
 django_static
+start_dev_server.sh
 
 *.log
 *.pot
@@ -8,4 +9,3 @@ django_static
 __pycache__
 db.sqlite3
 media
-
