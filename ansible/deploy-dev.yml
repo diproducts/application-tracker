@@ -1,0 +1,10 @@
+---
+- name: Deploy Django and React application to development server
+  hosts: webservers
+  become: True
+  roles:
+    - base
+    - django
+    - react
+    - gunicorn
+    - nginx
