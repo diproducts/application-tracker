@@ -2,7 +2,7 @@ name: Deploy dev
 
 on:
   push:
-    branches: [ "github_actions" ]
+    branches: [ "github-actions" ]
 
   workflow_dispatch:
 
@@ -18,7 +18,7 @@ jobs:
       REPO_URL: ${{ vars.REPO_URL }}
       REPO_NAME: ${{ vars.REPO_NAME }}
       REPO_DIR: ${{ vars.REPO_DIR }}
-      REPO_BRANCH: github_actions
+      REPO_BRANCH: github-actions
       # DJANGO
       DEBUG: ${{ vars.DEBUG }}
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
