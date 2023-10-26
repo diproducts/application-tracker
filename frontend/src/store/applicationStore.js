@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { newApp, newPhase } from "../helpers/api";
+import { newApp, newPhase, getApps } from "../helpers/api";
 
 class ApplicationStore {
     applications = [];
@@ -21,8 +21,8 @@ class ApplicationStore {
         makeAutoObservable(this, {}, { autoBind: true });
     }
 
-    async getApps() {
-
+    setApps(apps) {
+        this.applications = apps;
     }
 
     async postPhase({ id, name, date, contacts, notes }) {
@@ -45,6 +45,8 @@ class ApplicationStore {
         if (cv) formData.append('cv', cv);
         if (cover_letter) formData.append('cover_letter', cover_letter);
 
+        console.log(data)
+
         try {
             newApp(data, formData)
                 .then(applicationId => {
@@ -58,6 +60,15 @@ class ApplicationStore {
             console.log(err);
             return false;
         }
+    }
+
+    async getApps() {
+        getApps()
+            .then((apps) => {
+                console.log(apps)
+                if (apps) this.setApps(apps)
+            })
+            .catch(err => console.log(err))
     }
 
 }

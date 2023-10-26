@@ -8,6 +8,8 @@ const client = axios.create({
     baseURL: process.env.BASE_URL,
 });
 
+const apiURL = 'http://127.0.0.1:8000/';
+
 client.interceptors.request.use(
     (config) => {
         if (config.data instanceof FormData) {
@@ -22,7 +24,7 @@ client.interceptors.request.use(
 
 export const checkUser = async () => {
     try {
-        const response = await client.get("api/auth/user/");
+        const response = await client.get(`${apiURL}api/auth/user/`);
         return response;
     } catch (err) {
         return false;
@@ -31,7 +33,7 @@ export const checkUser = async () => {
 
 export const register = async (data) => {
     try {
-        const response = await client.post("auth/register/",
+        const response = await client.post("api/auth/register/",
             {
                 name: data.name,
                 password: data.password,
@@ -73,11 +75,10 @@ export const logout = async () => {
 export const newApp = async (data, formData) => {
     try {
         const response = await client.post(
-            "api/applications/",
-            formData,
-            data
+            `${apiURL}api/applications/`,
+            data,
+            formData
         );
-        console.log(response)
         if (response.status === 201) {
             return response.data.id;
         }
@@ -89,10 +90,9 @@ export const newApp = async (data, formData) => {
 }
 
 export const newPhase = async (data, id) => {
-    console.log(data);
     try {
         const response = await client.post(
-            `api/applications/${id}/phases/`,
+            `${apiURL}api/applications/${id}/phases/`,
             {
                 ...data,
                 headers: {
@@ -105,6 +105,18 @@ export const newPhase = async (data, id) => {
         // if (response.status === 200) return true;
         // else return false;
     } catch (err) {
+        return false;
+    }
+}
+
+export const getApps = async () => {
+    try {
+        const response = await client.get(`${apiURL}api/applications/`);
+        console.log(response.data)
+        if (response.status === 200) return response.data;
+        else return false;
+    } catch (err) {
+        console.log(err);
         return false;
     }
 }

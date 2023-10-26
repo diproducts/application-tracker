@@ -10,12 +10,15 @@ const AddApplication = observer(({ setShowAddModal }) => {
     const [date, setDate] = useState();
     const [contact, setContact] = useState();
     const [jobDescription, setJobDescription] = useState();
+    const [unmounting, setUnmounting] = useState(false);
 
     const [resume, setResume] = useState(null);
     const [coverLetter, setCoverLetter] = useState(null);
 
     const handleCloseModal = () => {
-        setShowAddModal(false);
+        setUnmounting(true);
+        setTimeout(() => setShowAddModal(false), 500);
+
     }
 
     const handleTitleChange = (e) => {
@@ -41,16 +44,18 @@ const AddApplication = observer(({ setShowAddModal }) => {
         applicationStore.postApplication({
             company_name: company,
             position: jobTitle,
+            job_description: jobDescription,
             url: link,
             cv: resume,
             cover_letter: coverLetter,
             date: date,
             contacts: contact
-        })
+        });
+        handleCloseModal()
     }
 
     return (
-        <div className="dark-screen">
+        <div className={`dark-screen ${unmounting && "fade-out"}`}>
             <div className="add-popup">
                 <div className="add-popup-title">
                     <h1 className="add-popup-title-text">Add a New Application</h1>

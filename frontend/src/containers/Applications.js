@@ -1,12 +1,18 @@
 import AddApplication from "../components/PopUps/AddApplication";
+import { observer } from "mobx-react";
+import applicationStore from "../store/applicationStore";
 import { useState, useEffect } from "react";
 
-const Applications = () => {
+const Applications = observer(() => {
     const [showAddModal, setShowAddModal] = useState(false);
 
     const handleAddClick = () => {
         setShowAddModal(true);
     }
+
+    useEffect(() => {
+        applicationStore.getApps();
+    }, [])
 
     const table_data = [
         {
@@ -40,13 +46,13 @@ const Applications = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {table_data.map((r, index) => {
+                        {applicationStore.applications.map((r, index) => {
                             return (
                                 <tr key={index + Math.floor(Math.random())}>
-                                    <td>{r.company}</td>
-                                    <td>{r.role}</td>
-                                    <td>{r.applied_date}</td>
-                                    <td>{r.status}</td>
+                                    <td>{r.company_name}</td>
+                                    <td>{r.position}</td>
+                                    <td>{r.phases[0].date}</td>
+                                    <td>{r.phases[r.phases.length - 1].name}</td>
                                 </tr>
                             )
                         })}
@@ -56,6 +62,6 @@ const Applications = () => {
             {showAddModal && <AddApplication setShowAddModal={setShowAddModal} />}
         </div>
     )
-}
+})
 
 export default Applications;
