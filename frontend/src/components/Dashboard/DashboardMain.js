@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import styles from "../../styles/dashboard.module.css";
 
 const DashboardMain = () => {
     const navigate = useNavigate();
@@ -14,7 +15,7 @@ const DashboardMain = () => {
     }
 
     return (
-        <div className="dash-container">
+        <div className={styles.dashboardContainer}>
             <div className="dash-col dash-col-left">
                 <h1 className="dash-title">My Progress</h1>
                 <div className="stata-container">

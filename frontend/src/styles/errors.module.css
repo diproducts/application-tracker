@@ -1,0 +1,62 @@
+.errorCard {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    margin-left: 5px;
+    z-index: 2;
+    display: flex;
+    width: 350px;
+    justify-content: center;
+    align-items: center;
+    height: 52px;
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.text {
+    color: #000;
+    /* text air */
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    z-index: 2;
+}
+
+.fadeIn {
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Fade-out animation */
+.fadeOut {
+    opacity: 1;
+    animation: fadeOut 0.5s ease-in-out forwards;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}

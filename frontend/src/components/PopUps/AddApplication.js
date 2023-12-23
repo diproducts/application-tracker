@@ -2,6 +2,7 @@ import DragDrop from "../DragDrop";
 import { useState } from "react";
 import { observer } from "mobx-react";
 import applicationStore from "../../store/applicationStore";
+import styles from "../../styles/applications.module.css";
 
 const AddApplication = observer(({ setShowAddModal }) => {
     const [jobTitle, setJobTitle] = useState();
@@ -56,7 +57,7 @@ const AddApplication = observer(({ setShowAddModal }) => {
 
     return (
         <div className={`dark-screen ${unmounting && "fade-out"}`}>
-            <div className="add-popup">
+            <div className={styles.addPopup}>
                 <div className="add-popup-title">
                     <h1 className="add-popup-title-text">Add a New Application</h1>
                 </div>

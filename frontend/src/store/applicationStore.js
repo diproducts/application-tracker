@@ -45,8 +45,6 @@ class ApplicationStore {
         if (cv) formData.append('cv', cv);
         if (cover_letter) formData.append('cover_letter', cover_letter);
 
-        console.log(data)
-
         try {
             newApp(data, formData)
                 .then(applicationId => {
@@ -65,7 +63,6 @@ class ApplicationStore {
     async getApps() {
         getApps()
             .then((apps) => {
-                console.log(apps)
                 if (apps) this.setApps(apps)
             })
             .catch(err => console.log(err))

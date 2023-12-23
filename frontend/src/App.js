@@ -1,4 +1,4 @@
-import './static/App.css';
+import './styles/App.css';
 import React from 'react';
 import { Route, Routes, Navigate } from "react-router-dom";
 import NotFound from './components/NotFound';
@@ -24,7 +24,7 @@ const App = observer(() => {
   if (isLoading) {
     return;
   } else return (
-    <div style={{ height: "100vh", width: "100vw" }}>
+    <div style={{ height: "100dvh", width: "100dvw" }}>
       <Routes>
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={userStore.isLogged ? <Navigate to="/dashboard" /> : <Navigate to="/auth" />} />

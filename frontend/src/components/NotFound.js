@@ -1,4 +1,4 @@
-import '../static/NotFound.css';
+import '../styles/NotFound.css';
 
 export default function NotFound({ navigate }) {
     return (

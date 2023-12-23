@@ -91,6 +91,7 @@ footer {
   font-family: "Inter", sans-serif;
   font-size: 13px;
   color: #DADADA;
+  z-index: 2;
 }
 
 .left-footer p {
@@ -114,22 +115,6 @@ footer {
 .footer-menu li:hover {
   cursor: pointer;
   text-decoration: underline;
-}
-
-.main-dashboard {
-  height: 100vh;
-  background: #F6F4F8;
-}
-
-.dash-container {
-  height: 100%;
-  width: 80%;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding-top: 90px;
-  gap: 20px;
 }
 
 h1 {
@@ -406,14 +391,7 @@ tbody tr:nth-child(even) {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 2;
-}
-
-.add-popup {
-  background: #F9F9F9;
-  padding: 27px 24px;
-  border-radius: 7px;
-  animation: fadeIn 1s;
+  z-index: 3;
 }
 
 .add-popup-title-text {

@@ -1,0 +1,19 @@
+.dashContainer {
+    display: flex;
+    flex-direction: column;
+    background: #F6F4F8;
+    height: 100%;
+    overflow: scroll;
+}
+
+
+.dashboardContainer {
+    height: 100%;
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 90px;
+    gap: 20px;
+}

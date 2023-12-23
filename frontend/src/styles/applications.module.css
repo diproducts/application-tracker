@@ -1,0 +1,36 @@
+.addPopup {
+    background: #F9F9F9;
+    padding: 27px 24px;
+    border-radius: 7px;
+    animation: fadeIn 1s;
+    z-index: 3;
+}
+
+.openner {
+    width: 5%;
+}
+
+.openner img {
+    height: 20px;
+    cursor: pointer;
+    transition: transform 0.5s ease;
+}
+
+.info {
+    width: 100v%;
+    background-color: red;
+}
+
+.rotate180 {
+    transform: rotate(180deg);
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
