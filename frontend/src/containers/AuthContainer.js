@@ -1,7 +1,7 @@
 import { useState } from "react";
 import LogIn from '../components/Auth/Login';
 import SignUp from '../components/Auth/Signup';
-import '../static/Auth.css';
+import styles from "../styles/auth.module.css";
 
 export default function AuthContainer() {
     const [mode, setMode] = useState({
@@ -19,9 +19,8 @@ export default function AuthContainer() {
     }
 
     return (
-        <main>
+        <main className={styles.mainAuth}>
             {mode.login ? <LogIn toggle={toggle} /> : <SignUp toggle={toggle} />}
-            <footer></footer>
         </main>
     )
 }

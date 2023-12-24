@@ -1,4 +1,4 @@
-import './static/App.css';
+import './styles/App.css';
 import React from 'react';
 import { Route, Routes, Navigate } from "react-router-dom";
 import NotFound from './components/NotFound';
@@ -7,6 +7,7 @@ import DashboardContainer from './containers/DashboardContainer';
 import { useEffect, useState } from 'react';
 import { observer } from "mobx-react";
 import userStore from './store/userStore';
+import Footer from './components/Footer';
 
 const App = observer(() => {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,12 +24,15 @@ const App = observer(() => {
   if (isLoading) {
     return;
   } else return (
-    <Routes>
-      <Route path="*" element={<NotFound />} />
-      <Route path="/" element={userStore.isLogged ? <Navigate to="/dashboard" /> : <Navigate to="/auth" />} />
-      <Route path="/dashboard" element={userStore.isLogged ? <DashboardContainer /> : <Navigate to="/auth" />} />
-      <Route exact path="/auth" element={userStore.isLogged ? <Navigate to="/dashboard" /> : <AuthContainer />} />
-    </Routes>
+    <div style={{ height: "100dvh", width: "100dvw" }}>
+      <Routes>
+        <Route path="*" element={<NotFound />} />
+        <Route path="/" element={userStore.isLogged ? <Navigate to="/dashboard" /> : <Navigate to="/auth" />} />
+        <Route path="/dashboard/*" element={userStore.isLogged ? <DashboardContainer /> : <Navigate to="/auth" />} />
+        <Route exact path="/auth" element={userStore.isLogged ? <Navigate to="/dashboard" /> : <AuthContainer />} />
+      </Routes>
+      <Footer />
+    </div>
   )
 })
 
