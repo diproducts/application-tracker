@@ -24,7 +24,7 @@ client.interceptors.request.use(
 
 export const checkUser = async () => {
     try {
-        const response = await client.get(`${apiURL}api/auth/user/`);
+        const response = await client.get(`api/auth/user/`);
         return response;
     } catch (err) {
         return false;
@@ -33,7 +33,7 @@ export const checkUser = async () => {
 
 export const register = async (data) => {
     try {
-        const response = await client.post(`${apiURL}api/auth/register/`,
+        const response = await client.post(`api/auth/register/`,
             {
                 name: data.name,
                 password: data.password,
@@ -48,7 +48,7 @@ export const register = async (data) => {
 
 export const login = async (data) => {
     try {
-        const response = await client.post(`${apiURL}api/auth/login/`,
+        const response = await client.post(`api/auth/login/`,
             {
                 email: data.email,
                 password: data.password
@@ -64,7 +64,7 @@ export const login = async (data) => {
 export const logout = async () => {
     try {
         const response = await client.post(
-            `${apiURL}api/auth/logout/`,
+            `api/auth/logout/`,
             { withCredentials: true }
         );
         if (response.status === 200) return true;
@@ -77,7 +77,7 @@ export const logout = async () => {
 export const newApp = async (data, formData) => {
     try {
         const response = await client.post(
-            `${apiURL}api/applications/`,
+            `api/applications/`,
             data,
             formData
         );
@@ -94,7 +94,7 @@ export const newApp = async (data, formData) => {
 export const newPhase = async (data, id) => {
     try {
         const response = await client.post(
-            `${apiURL}api/applications/${id}/phases/`,
+            `api/applications/${id}/phases/`,
             {
                 ...data,
                 headers: {
@@ -113,7 +113,7 @@ export const newPhase = async (data, id) => {
 
 export const getApps = async () => {
     try {
-        const response = await client.get(`${apiURL}api/applications/`);
+        const response = await client.get(`api/applications/`);
         console.log(response.data)
         if (response.status === 200) return response.data;
         else return false;
