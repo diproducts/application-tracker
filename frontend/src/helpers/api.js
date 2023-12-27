@@ -39,7 +39,7 @@ export const register = async (data) => {
                 password: data.password,
                 email: data.email
             });
-        if (response.status === 201) return true;
+        if (response.status === 201 || response.status === 204) return true;
         return false;
     } catch (err) {
         return false;
@@ -54,7 +54,7 @@ export const login = async (data) => {
                 password: data.password
             });
         console.log(response)
-        if (response.status === 200) return true;
+        if (response.status === 200 || response.status === 204) return true;
         else return false;
     } catch (err) {
         return false;

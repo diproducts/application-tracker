@@ -19,6 +19,7 @@ include(
     'components/email.py',
     'components/storage.py',
     'components/rest_framework.py',
+    'components/authentication.py',
     STAGE_SETTINGS,
     'envvars.py',
 )

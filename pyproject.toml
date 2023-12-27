@@ -20,6 +20,8 @@ s3transfer = "^0.10.0"
 django-split-settings = "^1.2.0"
 psycopg2 = "^2.9.9"
 django-extensions = "^3.2.3"
+django-allauth = "^0.59.0"
+dj-rest-auth = "^5.0.2"
 
 
 [tool.poetry.group.dev.dependencies]
