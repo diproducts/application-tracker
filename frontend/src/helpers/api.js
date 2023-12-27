@@ -75,12 +75,31 @@ export const logout = async () => {
 }
 
 export const newApp = async (data, formData) => {
+    const form = new FormData();
+
+    // Append JSON data fields to FormData
+    Object.keys(data).forEach(key => {
+        form.append(key, data[key]);
+    });
+
+    // Append file data fields to FormData
+    formData.forEach((value, key) => {
+        form.append(key, value);
+    });
+
+    console.log(form, 'data before call')
+
     try {
         const response = await client.post(
             `api/applications/`,
-            data,
-            formData
+            form,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            }
         );
+        console.log(response)
         if (response.status === 201) {
             return response.data.id;
         }
