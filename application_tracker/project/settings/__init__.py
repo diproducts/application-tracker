@@ -9,7 +9,7 @@ ENVVAR_SETTINGS_PREFIX = 'APPLICATION_TRACKER_SETTING_'
 env = environ.Env()
 environ.Env.read_env(BASE_DIR / '.env')
 
-STAGE = env('STAGE') or 'development'
+STAGE = env.get_value('STAGE', default='development')  # type: ignore
 STAGE_SETTINGS = f'{STAGE}.py'
 
 include(
