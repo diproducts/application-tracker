@@ -1,7 +1,6 @@
-from django.urls import path
-from rest_framework_nested.routers import SimpleRouter, NestedSimpleRouter
+from rest_framework_nested.routers import NestedSimpleRouter, SimpleRouter
 
-from .views import ApplicationViewSet, ApplicationPhaseViewSet
+from .views import ApplicationPhaseViewSet, ApplicationViewSet
 
 router = SimpleRouter()
 router.register(r'applications', ApplicationViewSet, basename='application')

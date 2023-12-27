@@ -51,9 +51,9 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           ssh-keyscan "$SSH_HOST" >> ~/.ssh/known_hosts
-        env: 
+        env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        
+
       - name: Run Ansible playbook
         run: |
           cd ansible

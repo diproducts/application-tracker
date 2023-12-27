@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-
 from .models import Application, ApplicationPhase
+
 
 class ApplicationPhaseSerializer(serializers.ModelSerializer):
 
@@ -14,7 +14,7 @@ class ApplicationPhaseSerializer(serializers.ModelSerializer):
             'contacts',
             'notes',
         ]
-        
+
 
 class ApplicationSerializer(serializers.ModelSerializer):
     phases = ApplicationPhaseSerializer(read_only=True, many=True)

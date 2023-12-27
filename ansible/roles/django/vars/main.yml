@@ -1,2 +1,0 @@
-project_path: "{{ lookup('env', 'REPO_DIR') }}"
-virtualenv_dir: ".venv"

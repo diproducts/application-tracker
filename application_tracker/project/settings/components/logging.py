@@ -18,7 +18,8 @@ LOGGING = {
         logger_name: {
             'level': 'WARNING',
             'propagate': True,
-        } for logger_name in ('django', 'django.request', 'django.db.backends', 'django.template', 'application_tracker')
+        } for logger_name in
+        ('django', 'django.request', 'django.db.backends', 'django.template', 'application_tracker')
     },
     'root': {
         'level': 'DEBUG',

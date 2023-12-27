@@ -1,21 +1,23 @@
-from django.db import models
-from django.db.models import Q, F
-from django.db.models.functions import Coalesce
 from django.conf import settings
-
+from django.db import models
+from django.db.models import F, Q
+from django.db.models.functions import Coalesce
 
 from .validators import pdf_or_word_file_validator
 
 User = settings.AUTH_USER_MODEL
 
+
 class ApplicationQuerySet(models.QuerySet):
+
     def search(self, query, user):
         lookup = Q(company_name__icontains=query) | Q(position__icontains=query)
         qs = self.filter(owner=user).filter(lookup)
         return qs
-    
+
 
 class ApplicationManager(models.Manager):
+
     def get_queryset(self):
         return ApplicationQuerySet(self.model, using=self._db)
 
@@ -42,27 +44,23 @@ class Application(models.Model):
 
     def __str__(self):
         return f'{str(self.id)}. {self.company_name}'
-    
+
 
 class ApplicationPhase(models.Model):
-    PHASE_NAME_CHOICES = [
-        ('applied', 'Applied'),
-        ('phone_screening', 'Phone screening'),
-        ('interview', 'Interview'),
-        ('technical_interview', 'Technical interview'),
-        ('rejected', 'Rejected'),
-        ('offer', 'Offer')
-    ]
+    PHASE_NAME_CHOICES = [('applied', 'Applied'), ('phone_screening', 'Phone screening'), ('interview', 'Interview'),
+                          ('technical_interview', 'Technical interview'), ('rejected', 'Rejected'), ('offer', 'Offer')]
 
     application = models.ForeignKey(Application, on_delete=models.CASCADE, related_name='phases')
     name = models.CharField(max_length=30, choices=PHASE_NAME_CHOICES)
     date = models.DateField(help_text='The date of the event', null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
-    contacts = models.CharField(max_length=255, help_text='Provide contacts of the person of reference', null=True, blank=True)
+    contacts = models.CharField(
+        max_length=255, help_text='Provide contacts of the person of reference', null=True, blank=True
+    )
     notes = models.TextField(help_text='Any notes', null=True, blank=True)
 
     class Meta:
         ordering = [Coalesce(F('date'), F('created')).desc()]
-    
+
     def __str__(self):
-        return f'{self.name} for {self.application}' 
+        return f'{self.name} for {self.application}'

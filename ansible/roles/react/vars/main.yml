@@ -1,1 +1,0 @@
-project_path: "{{ lookup('env', 'REPO_DIR') }}"

@@ -1,6 +1,0 @@
-- name: Git checkout
-  ansible.builtin.git:
-    repo: "{{ repo_url }}/{{ repo_name }}.git"
-    dest: "{{ repo_dir }}"
-    single_branch: yes
-    version: "{{ repo_branch }}"
