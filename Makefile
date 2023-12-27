@@ -43,3 +43,11 @@ shell:
 .PHONY: superuser
 superuser:
 	poetry run python -m application_tracker.manage createsuperuser
+
+.PHONY: run-frontend
+run-frontend:
+	cd frontend; npm i; npm start
+
+.PHONY: build-frontend
+build-frontend:
+	cd frontend; npm i; npm run build
