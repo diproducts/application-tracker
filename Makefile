@@ -51,3 +51,8 @@ run-frontend:
 .PHONY: build-frontend
 build-frontend:
 	cd frontend; npm i; npm run build
+
+.PHONY: run-production
+run-production:
+	test -f .env || touch .env
+	docker compose down; docker compose build; docker compose up -d --force-recreate
