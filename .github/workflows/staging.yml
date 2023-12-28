@@ -37,7 +37,7 @@ jobs:
           ENV_FILE: ${{ secrets.ENV_FILE }}
           REACT_APP_ENV_FILE: ${{ secrets.REACT_APP_ENV_FILE }}
         run: |
-          ssh target "cd /opt/qa/application-tracker/ && echo $ENV_FILE > .env && echo $REACT_APP_ENV_FILE > frontend/.env"
+          ssh target "cd /opt/qa/application-tracker/ && echo '$ENV_FILE' > .env && echo '$REACT_APP_ENV_FILE' > frontend/.env"
       - name: Run deploy
         run: |
           ssh target "cd /opt/qa/application-tracker/ && git pull && make run-production
