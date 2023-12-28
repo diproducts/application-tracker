@@ -3,7 +3,7 @@ name: Continuous Integration Staging
 on:
   push:
     branches:
-      - backend-refactor
+      - dev
 
 concurrency:
   group: dev
