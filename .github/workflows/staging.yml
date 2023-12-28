@@ -43,4 +43,4 @@ jobs:
           ssh target "cd code/application-tracker/ && git pull && make run-production"
       - name: Build frontend
         run: |
-          ssh target "cd code/application-tracker/ && make build-frontend"
+          ssh target "cd code/application-tracker/ && make build-frontend && cp -r frontend/build /var/www/application-tracker"
