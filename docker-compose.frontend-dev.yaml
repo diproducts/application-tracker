@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:16.1-alpine
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    restart: unless-stopped
+    ports:
+     - 8000:8000
+    depends_on:
+      - db
+    environment:
+      APPLICATION_TRACKER_SETTING_DATABASES: '{"default":{"HOST":"db"}}'
+
+volumes:
+  postgresql-data:
+    driver: local
