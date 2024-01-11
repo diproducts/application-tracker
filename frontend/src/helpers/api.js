@@ -36,7 +36,8 @@ export const register = async (data) => {
         const response = await client.post(`api/auth/register/`,
             {
                 name: data.name,
-                password: data.password,
+                password1: data.password,
+                password2: data.password,
                 email: data.email
             });
         if (response.status === 201 || response.status === 204) return true;
