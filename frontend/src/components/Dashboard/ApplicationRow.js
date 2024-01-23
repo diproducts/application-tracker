@@ -20,10 +20,10 @@ export const ApplicationRow = ({ app, index }) => {
                         alt="arrow down" />
                 </td>
             </tr>
-            {/* {openDrop &&
+            {openDrop &&
                 <tr className={styles.info}>
                     hello
-                </tr>} */}
+                </tr>}
         </>
     )
 }

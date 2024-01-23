@@ -19,8 +19,18 @@ export default function AuthContainer() {
     }
 
     return (
-        <main className={styles.mainAuth}>
-            {mode.login ? <LogIn toggle={toggle} /> : <SignUp toggle={toggle} />}
+        <main className="flex h-screen w-screen">
+            <div className="bg-main flex-1 p-[50px] pt-[90px] text-left">
+                <h1 className={`${styles.mainTitle} m-0`}>Application</h1>
+                <h1 className={`${styles.mainTitle} m-0`}>Manager</h1>
+
+                <p className={`${styles.secondaryTitle} mt-[30px]`}>A journey to success is easier when you got <br />
+                    the right tools. The first step is an outstanding resume. <br />
+                    Let us help you with that. You can do the rest.</p>
+            </div>
+            <div className="w-[36.72vw] flex justify-center items-center">
+                {mode.login ? <LogIn toggle={toggle} /> : <SignUp toggle={toggle} />}
+            </div>
         </main>
     )
 }
