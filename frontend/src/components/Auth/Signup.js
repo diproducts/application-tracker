@@ -4,31 +4,33 @@ import { observer } from "mobx-react";
 import userStore from "../../store/userStore";
 import { useNavigate } from "react-router-dom";
 import styles from "../../styles/auth.module.css";
-import { ErrorCard } from "../Errors/ErrorCard";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useState } from "react";
 
-const SignUp = observer(({ toggle }) => {
+const SignUp = observer(() => {
     const { register, handleSubmit, getValues } = useForm();
     const navigate = useNavigate();
-    const [isPassError, setIsPassError] = useState(false);
-    const [isCopyPassError, setIsCopyPassError] = useState(false);
-    const [isEmailError, setIsEmailError] = useState(false);
-    const [isUserError, setIsUserError] = useState(false);
-
-    const [emailMessage, setEmailMessage] = useState();
+    const [isLoading, setIsLoading] = useState(false);
 
     const onSubmit = async (data) => {
         if (!schema.validate(data)) return;
-        const response = await userStore.registerUser(data);
-        if (!response) {
-            setEmailMessage("This email is already taken")
-            setIsEmailError(true);
-            setTimeout(() => setIsEmailError(false), 4000)
+        setIsLoading(true)
+        try {
+            const response = await userStore.registerUser(data);
+            if (!response) {
+                toast.error("This email is already taken!")
+                setIsLoading(false)
+            }
+            else {
+                userStore.setLogged(true);
+                navigate("/dashboard")
+                setIsLoading(false)
+            }
+        } catch (err) {
+            toast.error("This email is already taken!")
         }
-        else {
-            userStore.setLogged(true);
-            navigate("/dashboard")
-        }
+        setIsLoading(false)
     }
 
     const handleClick = () => {
@@ -41,58 +43,63 @@ const SignUp = observer(({ toggle }) => {
 
 
         if (!schema.validate({ email })) {
-            setEmailMessage("please provide a valid email")
-            setIsEmailError(true);
-            setTimeout(() => setIsEmailError(false), 4000)
+            toast.error("Please provide a valid email!")
         }
 
         if (!schema.validate({ password })) {
-            setIsPassError(true);
-            setTimeout(() => setIsPassError(false), 4000)
+            toast.error("Please provide a valid password!")
         }
 
         if (passwordConfirmed !== password) {
-            setIsCopyPassError(true);
-            setTimeout(() => setIsCopyPassError(false), 4000)
+            toast.error("Paswords don't match!")
         }
 
         if (!schema.validate({ name })) {
-            setIsUserError(true);
-            setTimeout(() => setIsUserError(false), 4000)
+            toast.error("Please provide a valid username!");
         }
     }
 
     return (
-        <div className={styles.container}>
-            <h1>Sign up</h1>
+        <div className=" w-full lg:w-[62.13%]">
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                theme="light" />
             <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 <div className={styles.formWrapper}>
                     <label htmlFor='name'>username: </label>
                     <div style={{ position: "relative" }}>
                         <input {...register("name", { required: false })} type='text' name='name' />
-                        {isUserError && <ErrorCard errorMessage={"please provide a valid username"} />}
                     </div>
                     <label htmlFor='email'>email: </label>
                     <div style={{ position: "relative" }}>
                         <input {...register("email", { required: true })} type='text' name='email' />
-                        {isEmailError && <ErrorCard errorMessage={emailMessage} />}
                     </div>
                     <label htmlFor='password'>password: </label>
                     <div style={{ position: "relative" }}>
                         <input {...register("password", { required: true })} type='password' name='password' />
-                        {isPassError && <ErrorCard errorMessage={"please provide a valid password"} />}
                     </div>
                     <label htmlFor='confirm'>confirm password:</label>
                     <div style={{ position: "relative" }}>
                         <input {...register("confirm", { required: true })} type='password' name='confirm' />
-                        {isCopyPassError && <ErrorCard errorMessage={"Paswords don't match"} />}
                     </div>
-                    <input onClick={handleClick} type="submit" className={styles.bt} value='SUBMIT' />
+                    <button
+                        onClick={handleClick}
+                        className={`${styles.bt} 
+                      cursor-pointer bg-[#6BA6FF] uppercase`}
+                    >
+                        {isLoading ? <div className=" flex items-center justify-center space-x-2 animate-pulse">
+                            <div className="w-[10px] h-[10px] bg-white rounded-full"></div>
+                            <div className="w-[10px] h-[10px] bg-white rounded-full"></div>
+                            <div className="w-[10px] h-[10px] bg-white rounded-full"></div>
+                        </div> : 'submit'}</button>
                 </div>
             </form>
-            <div className={styles.butttons}>
-                <button className={styles.bt} onClick={toggle}>LOG IN</button>
-            </div>
         </div>
     )
 });

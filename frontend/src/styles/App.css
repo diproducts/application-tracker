@@ -82,8 +82,7 @@ header {
 
 footer {
   width: 100%;
-  position: fixed;
-  bottom: 0;
+  height: fit-content;
   background: #666;
   display: flex;
   justify-content: space-between;
