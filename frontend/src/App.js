@@ -24,7 +24,7 @@ const App = observer(() => {
   if (isLoading) {
     return;
   } else return (
-    <div style={{ height: "100dvh", width: "100dvw" }}>
+    <div className='flex flex-col w-screen h-screen'>
       <Routes>
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={userStore.isLogged ? <Navigate to="/dashboard" /> : <Navigate to="/auth" />} />

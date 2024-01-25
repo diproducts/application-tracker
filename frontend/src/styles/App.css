@@ -82,9 +82,8 @@ header {
 
 footer {
   width: 100%;
-  position: fixed;
-  bottom: 0;
-  background: rgba(102, 102, 102, 0.80);
+  height: fit-content;
+  background: #666;
   display: flex;
   justify-content: space-between;
   align-items: center;

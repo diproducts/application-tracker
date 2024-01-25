@@ -26,7 +26,7 @@ Schema.prototype.validate = function (input, mode = 'singup') {
         else if (key === 'password' || key === 'name') {
             if (!this[key].reg.test(value)) return false;
         } else {
-            if (value != input.password || value.length === 0) return false
+            if (value !== input.password || value.length === 0) return false
         }
     }
     return true;
