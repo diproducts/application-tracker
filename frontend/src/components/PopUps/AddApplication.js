@@ -53,6 +53,7 @@ const AddApplication = observer(({ setShowAddModal }) => {
             contacts: contact
         });
         handleCloseModal()
+        applicationStore.getApps();
     }
 
     return (
