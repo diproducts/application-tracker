@@ -253,12 +253,6 @@ h1 {
   padding-top: 84px;
 }
 
-.applications-container {
-  width: 75%;
-  margin: auto;
-  margin-top: 90px;
-}
-
 .applications-stata {
   display: flex;
 }
@@ -267,23 +261,6 @@ h1 {
   width: 100%;
   margin-top: 50px;
   border-collapse: collapse;
-}
-
-.applications-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.application-header-title {
-  margin: 0;
-  padding: 0;
-  color: #000;
-  font-family: "Noto Sans";
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
 }
 
 .add-popup-button-container {

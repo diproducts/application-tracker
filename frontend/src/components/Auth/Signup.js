@@ -60,7 +60,7 @@ const SignUp = observer(() => {
     }
 
     return (
-        <div className=" w-full lg:w-[62.13%]">
+        <div className=" w-full">
             <ToastContainer
                 position="top-right"
                 autoClose={5000}
@@ -91,7 +91,7 @@ const SignUp = observer(() => {
                     <button
                         onClick={handleClick}
                         className={`${styles.bt} 
-                      cursor-pointer bg-[#6BA6FF] uppercase`}
+                      cursor-pointer bg-[#6BA6FF] uppercase  w-[62.33%] self-center`}
                     >
                         {isLoading ? <div className=" flex items-center justify-center space-x-2 animate-pulse">
                             <div className="w-[10px] h-[10px] bg-white rounded-full"></div>
