@@ -28,7 +28,7 @@ INSTALLED_APPS = [
 
     # Apps
     'application_tracker.users.apps.UsersConfig',
-    'application_tracker.api.apps.ApiConfig',
+    'application_tracker.applications.apps.ApplicationsConfig',
 ]
 
 MIDDLEWARE = [
