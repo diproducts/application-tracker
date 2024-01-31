@@ -18,6 +18,7 @@ INSTALLED_APPS = [
 
     # Third party
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     'storages',
     'dj_rest_auth',
@@ -25,6 +26,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
+    'drf_spectacular',
 
     # Apps
     'application_tracker.users.apps.UsersConfig',
