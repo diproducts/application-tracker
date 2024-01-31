@@ -3,13 +3,16 @@ from dj_rest_auth.serializers import UserDetailsSerializer
 from django.contrib.auth import authenticate, get_user_model
 from rest_framework import serializers
 
+from application_tracker.preferences.serializers import PreferencesSerializer
+
 User = get_user_model()
 
 
 class UserSerializer(UserDetailsSerializer):
+    preferences = PreferencesSerializer(read_only=True)
 
     class Meta(UserDetailsSerializer.Meta):
-        fields = UserDetailsSerializer.Meta.fields + ('name',)
+        fields = UserDetailsSerializer.Meta.fields + ('name', 'preferences')
 
 
 class UserRegisterSerializer(RegisterSerializer):
