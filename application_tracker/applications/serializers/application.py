@@ -24,5 +24,5 @@ class ApplicationSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
-        self.save_cv_as_default = validated_data.pop('save_cv_as_default')
+        self.save_cv_as_default = validated_data.pop('save_cv_as_default', False)
         return super().create(validated_data)
