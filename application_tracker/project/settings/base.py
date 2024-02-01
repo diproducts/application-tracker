@@ -33,6 +33,9 @@ INSTALLED_APPS = [
     'application_tracker.users.apps.UsersConfig',
     'application_tracker.applications.apps.ApplicationsConfig',
     'application_tracker.preferences.apps.PreferencesConfig',
+
+    # django-cleanup
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
