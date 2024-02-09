@@ -17,7 +17,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Third party
+    'django_extensions',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     'storages',
     'dj_rest_auth',
@@ -25,10 +27,15 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
+    'drf_spectacular',
 
     # Apps
     'application_tracker.users.apps.UsersConfig',
-    'application_tracker.api.apps.ApiConfig',
+    'application_tracker.applications.apps.ApplicationsConfig',
+    'application_tracker.preferences.apps.PreferencesConfig',
+
+    # django-cleanup
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [

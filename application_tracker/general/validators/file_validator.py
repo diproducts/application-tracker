@@ -44,12 +44,3 @@ class FileValidator(object):
             isinstance(other, FileValidator) and self.max_size == other.max_size and
             self.min_size == other.min_size and self.content_types == other.content_types
         )
-
-
-pdf_or_word_file_validator = FileValidator(
-    max_size=1024 * 10**4,
-    content_types=(
-        'application/pdf', 'application/msword',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-    )
-)

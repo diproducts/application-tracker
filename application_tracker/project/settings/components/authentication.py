@@ -7,7 +7,7 @@ REST_AUTH = {
     'PASSWORD_CHANGE_SERIALIZER': 'dj_rest_auth.serializers.PasswordChangeSerializer',
     'REGISTER_SERIALIZER': 'application_tracker.users.serializers.UserRegisterSerializer',
     'REGISTER_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
-    'TOKEN_MODEL': None,
+    # 'TOKEN_MODEL': None,
     'SESSION_LOGIN': True,
 }
 
