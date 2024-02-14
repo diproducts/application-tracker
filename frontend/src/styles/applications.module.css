@@ -9,6 +9,24 @@
     line-height: normal;
 }
 
+.header {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    color: #595959;
+}
+
+.tableText {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    color: #000000;
+}
+
 .applicationSecondary {
     color: #595959;
     /* text air */

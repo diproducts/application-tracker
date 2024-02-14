@@ -253,15 +253,6 @@ h1 {
   padding-top: 84px;
 }
 
-.applications-stata {
-  display: flex;
-}
-
-.app-table {
-  width: 100%;
-  margin-top: 50px;
-  border-collapse: collapse;
-}
 
 .add-popup-button-container {
   display: flex;
@@ -320,14 +311,6 @@ h1 {
 .add-popup-save-button:hover {
   cursor: pointer;
   background: #6095E5;
-}
-
-.app-head {
-  border: none;
-  margin: none;
-  color: #595959;
-  font-family: "inter", sans-serif;
-  font-size: 13px;
 }
 
 th {

@@ -62,7 +62,6 @@ export const login = async (data) => {
                 email: data.email,
                 password: data.password
             });
-        console.log(response)
         if (response.status === 200 || response.status === 204) return true;
         else return false;
     } catch (err) {
@@ -96,8 +95,6 @@ export const newApp = async (data, formData) => {
         form.append(key, value);
     });
 
-    console.log(form, 'data before call')
-
     try {
         const response = await client.post(
             `api/applications/`,
@@ -108,7 +105,6 @@ export const newApp = async (data, formData) => {
                 },
             }
         );
-        console.log(response)
         if (response.status === 201) {
             return response.data.id;
         }
@@ -130,10 +126,7 @@ export const newPhase = async (data, id) => {
                 },
             }
         );
-        console.log(response);
         return response;
-        // if (response.status === 200) return true;
-        // else return false;
     } catch (err) {
         return false;
     }
