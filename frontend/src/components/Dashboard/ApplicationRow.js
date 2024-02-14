@@ -10,8 +10,8 @@ export const ApplicationRow = ({ app, index }) => {
             <tr key={index + Math.floor(Math.random())}>
                 <td>{app.company_name}</td>
                 <td>{app.position}</td>
-                <td>{app.phases[0].date}</td>
-                <td>{app.phases[app.phases.length - 1].name}</td>
+                <td>{app.phases[0]?.date}</td>
+                <td>{app.phases[app.phases.length - 1]?.name}</td>
                 <td className={styles.openner}>
                     <img
                         className={openDrop ? styles.rotate180 : ""}

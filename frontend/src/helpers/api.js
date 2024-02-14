@@ -1,8 +1,16 @@
 import axios from 'axios';
 
+function getCookie(name) {
+    const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+    return cookieValue ? cookieValue.pop() : '';
+}
+
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
+
+const csrftoken = getCookie('csrftoken');
+axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
 
 const client = axios.create({
     baseURL: process.env.REACT_APP_BASE_URL,
