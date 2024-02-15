@@ -41,8 +41,8 @@ const AddApplication = observer(({ setShowAddModal }) => {
         setJobDescription(e.target.value);
     }
 
-    const handleSave = () => {
-        applicationStore.postApplication({
+    const handleSave = async () => {
+        await applicationStore.postApplication({
             company_name: company,
             position: jobTitle,
             job_description: jobDescription,
@@ -52,8 +52,8 @@ const AddApplication = observer(({ setShowAddModal }) => {
             date: date,
             contacts: contact
         });
+        await applicationStore.getApps();
         handleCloseModal()
-        applicationStore.getApps();
     }
 
     return (

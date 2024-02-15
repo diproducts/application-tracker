@@ -45,17 +45,11 @@ class ApplicationStore {
         if (cv) formData.append('cv', cv);
         if (cover_letter) formData.append('cover_letter', cover_letter);
 
-        console.log(formData);
-
         try {
-            newApp(data, formData)
-                .then(applicationId => {
-                    if (applicationId) {
-                        this.postPhase({ id: applicationId, name: "applied", contacts, date, notes })
-                            .then(response => console.log(response))
-                    }
-                })
-                .catch((err) => console.log(err));
+            const applicationId = await newApp(data, formData)
+            if (applicationId) {
+                await this.postPhase({ id: applicationId, name: "applied", contacts, date, notes })
+            }
         } catch (err) {
             console.log(err);
             return false;
@@ -63,11 +57,10 @@ class ApplicationStore {
     }
 
     async getApps() {
-        getApps()
-            .then((apps) => {
-                if (apps) this.setApps(apps)
-            })
-            .catch(err => console.log(err))
+        const apps = await getApps();
+        if (apps) {
+            this.setApps(apps)
+        }
     }
 
 }
