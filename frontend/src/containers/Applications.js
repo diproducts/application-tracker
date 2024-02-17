@@ -29,7 +29,7 @@ const Applications = observer(() => {
 
 
     return (
-        <div className="w-fit mx-auto mt-[57px]">
+        <div className={`w-fit mx-auto mt-[57px]`}>
             <div className="flex justify-between items-center">
                 <span className="flex flex-col">
                     <h1 className={styles.applicationTitle}>My Applications</h1>

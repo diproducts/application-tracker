@@ -9,6 +9,44 @@
     line-height: normal;
 }
 
+
+.sliding {
+    position: absolute;
+    top: -100%;
+    transition: 1s;
+}
+
+.slideOut {
+    animation: slideOut 0.5s forwards;
+}
+
+.slideIn {
+    animation: slideIn 0.5s forwards;
+}
+
+@keyframes slideOut {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-200%);
+        opacity: 0.5;
+    }
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: translateY(0%);
+    }
+}
+
+
 .header {
     font-family: 'Inter';
     font-style: normal;
