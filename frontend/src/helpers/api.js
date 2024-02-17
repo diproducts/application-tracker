@@ -135,7 +135,6 @@ export const newPhase = async (data, id) => {
 export const getApps = async () => {
     try {
         const response = await client.get(`api/applications/`);
-        console.log(response.data)
         if (response.status === 200) return response.data;
         else return false;
     } catch (err) {
