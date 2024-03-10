@@ -37,3 +37,7 @@ code {
 .hidden-scroll::-webkit-scrollbar {
   display: none;
 }
+
+.react-datepicker-wrapper {
+  width: 100%;
+}

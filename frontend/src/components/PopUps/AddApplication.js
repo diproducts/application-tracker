@@ -3,14 +3,19 @@ import { useState } from "react";
 import { observer } from "mobx-react";
 import applicationStore from "../../store/applicationStore";
 import styles from "../../styles/applications.module.css";
+import DatePicker from "react-datepicker";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import "react-datepicker/dist/react-datepicker.css";
 
 const AddApplication = observer(({ setShowAddModal }) => {
-    const [jobTitle, setJobTitle] = useState();
-    const [link, setLink] = useState();
-    const [company, setCompany] = useState();
-    const [date, setDate] = useState();
-    const [contact, setContact] = useState();
-    const [jobDescription, setJobDescription] = useState();
+
+    const [jobTitle, setJobTitle] = useState("");
+    const [link, setLink] = useState("");
+    const [company, setCompany] = useState("");
+    const [date, setDate] = useState(new Date());
+    const [contact, setContact] = useState("");
+    const [jobDescription, setJobDescription] = useState("");
     const [unmounting, setUnmounting] = useState(false);
 
     const [resume, setResume] = useState(null);
@@ -42,6 +47,27 @@ const AddApplication = observer(({ setShowAddModal }) => {
     }
 
     const handleSave = async () => {
+        if (!jobTitle || jobTitle?.length === 0) {
+            toast.error("Please provide a job title");
+            return;
+        }
+
+        if (!date || date?.length === 0) {
+            toast.error("Please provide a date");
+            return;
+        }
+
+        if (!company || company?.length === 0) {
+            toast.error("Please provide a company name");
+            return;
+        }
+
+        const selected_date = new Date(date);
+        const year = selected_date.getFullYear();
+        const month = String(selected_date.getMonth() + 1).padStart(2, '0');
+        const day = String(selected_date.getDate()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
+
         await applicationStore.postApplication({
             company_name: company,
             position: jobTitle,
@@ -49,7 +75,7 @@ const AddApplication = observer(({ setShowAddModal }) => {
             url: link,
             cv: resume,
             cover_letter: coverLetter,
-            date: date,
+            date: formattedDate,
             contacts: contact
         });
         await applicationStore.getApps();
@@ -58,6 +84,16 @@ const AddApplication = observer(({ setShowAddModal }) => {
 
     return (
         <div className={`dark-screen ${unmounting && "fade-out"}`}>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                theme="light" />
+
             <div className={styles.addPopup}>
                 <div className="add-popup-title">
                     <h1 className="add-popup-title-text">Add a New Application</h1>
@@ -85,11 +121,10 @@ const AddApplication = observer(({ setShowAddModal }) => {
                                 name="company" />
                         </div>
                         <div className="add-popup-input-wrapper">
-                            <label htmlFor="date">applied, date*:</label>
-                            <input onChange={(e) => handleDateChange(e)}
-                                className="input-add"
-                                type="text"
-                                name="date" />
+                            <label>date*:</label>
+                            <DatePicker
+                                selected={date}
+                                onChange={(date) => setDate(date)} />
                         </div>
                         <div className="add-popup-input-wrapper">
                             <label htmlFor="contact">point of contact (recruiter/hiring manager/etc)</label>

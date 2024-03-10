@@ -8,7 +8,7 @@ export const ApplicationDropDown = ({ opened, setOpened }) => {
     }
 
     return (
-        <div className={`bg-[#F0F0F0] w-full h-fit`}>
+        <div className={`bg-[#F0F0F0] w-full h-full `}>
             <div className=" w-full gap-[24px] h-[35px] flex justify-center items-center">
                 <div className="w-[25%] pl-[25px] h-full flex justify-start items-center">
                     <span className={styles.tableText}>{opened.company_name}</span>

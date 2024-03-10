@@ -29,7 +29,8 @@
 }
 
 header {
-  padding: 18px 20px;
+  padding-right: 20px;
+  padding-left: 20px;
   background-color: #F2E7FF;
   display: flex;
   justify-content: space-between;
@@ -44,40 +45,6 @@ header {
 .logo:hover {
   opacity: 0.7;
   cursor: pointer;
-}
-
-.navbar-menu {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  display: flex;
-  gap: 39px;
-}
-
-.navbar-menu li {
-  float: left;
-  color: #595959;
-  font-family: "Inter", sans-serif;
-  font-size: 13px;
-  text-decoration: none;
-}
-
-.navbar-menu li:hover {
-  cursor: pointer;
-  color: black;
-}
-
-.logout {
-  padding: 0px;
-  margin: 0;
-  font-family: "Inter", sans-serif;
-  font-size: 13px;
-}
-
-.logout:hover {
-  cursor: pointer;
-  text-decoration: underline;
 }
 
 footer {
