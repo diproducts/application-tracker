@@ -1,53 +1,45 @@
-import axios from 'axios';
-
 function getCookie(name) {
     const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
     return cookieValue ? cookieValue.pop() : '';
 }
 
-axios.defaults.xsrfCookieName = 'csrftoken';
-axios.defaults.xsrfHeaderName = 'X-CSRFToken';
-axios.defaults.withCredentials = true;
-
-const csrftoken = getCookie('csrftoken');
-axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
-
-const client = axios.create({
-    baseURL: process.env.REACT_APP_BASE_URL,
-});
-
-// const apiURL = 'http://127.0.0.1:8000/';
-
-client.interceptors.request.use(
-    (config) => {
-        if (config.data instanceof FormData) {
-            config.headers['Content-Type'] = 'multipart/form-data';
-        }
-        return config;
-    },
-    (error) => {
-        return Promise.reject(error);
-    }
-);
-
 export const checkUser = async () => {
+
     try {
-        const response = await client.get(`api/auth/user/`);
-        return response;
+        const response = await fetch(
+            `${process.env.REACT_APP_BASE_URL}/api/auth/user/`,
+            {
+                credentials: 'include',
+            }
+        );
+        return response.status === 200;
     } catch (err) {
         return false;
     }
 }
 
 export const register = async (data) => {
+    const csrftoken = getCookie('csrftoken');
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('X-CSRFToken', csrftoken);
+
     try {
-        const response = await client.post(`api/auth/register/`,
+        const response = await fetch(
+            `${process.env.REACT_APP_BASE_URL}/api/auth/register/`,
             {
-                name: data.name,
-                password1: data.password,
-                password2: data.password,
-                email: data.email
-            });
+                method: 'POST',
+                headers: headers,
+                credentials: 'include',
+                body: JSON.stringify({
+                    name: data.name,
+                    password1: data.password,
+                    password2: data.password,
+                    email: data.email
+                }),
+            }
+        );
         if (response.status === 201 || response.status === 204) return true;
         return false;
     } catch (err) {
@@ -56,12 +48,25 @@ export const register = async (data) => {
 }
 
 export const login = async (data) => {
+    const csrftoken = getCookie('csrftoken');
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('X-CSRFToken', csrftoken);
+
     try {
-        const response = await client.post(`api/auth/login/`,
+        const response = await fetch(
+            `${process.env.REACT_APP_BASE_URL}/api/auth/login/`,
             {
-                email: data.email,
-                password: data.password
-            });
+                method: 'POST',
+                headers: headers,
+                credentials: 'include',
+                body: JSON.stringify({
+                    email: data.email,
+                    password: data.password
+                }),
+            }
+        );
         if (response.status === 200 || response.status === 204) return true;
         else return false;
     } catch (err) {
@@ -70,19 +75,40 @@ export const login = async (data) => {
 }
 
 export const logout = async () => {
+    console.log('logout function');
+    const csrftoken = getCookie('csrftoken');
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('X-CSRFToken', csrftoken);
+
     try {
-        const response = await client.post(
-            `api/auth/logout/`,
-            { withCredentials: true }
+        const response = await fetch(
+            `${process.env.REACT_APP_BASE_URL}/api/auth/logout/`,
+            {
+                method: 'POST',
+                headers: headers,
+                credentials: 'include',
+                body: JSON.stringify({}),
+            }
         );
-        if (response.status === 200) return true;
-        else return false;
+        if (response.ok) {
+            return true;
+        } else {
+            return false;
+        }
     } catch (err) {
+        console.error(err);
         return false;
     }
 }
 
 export const newApp = async (data, formData) => {
+    const csrftoken = getCookie('csrftoken');
+
+    const headers = new Headers();
+    headers.append('X-CSRFToken', csrftoken);
+
     const form = new FormData();
 
     // Append JSON data fields to FormData
@@ -96,17 +122,17 @@ export const newApp = async (data, formData) => {
     });
 
     try {
-        const response = await client.post(
-            `api/applications/`,
-            form,
+        const response = await fetch(
+            `${process.env.REACT_APP_BASE_URL}/api/applications/`,
             {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
+                method: 'POST',
+                headers: headers,
+                credentials: 'include',
+                body: form,
             }
         );
         if (response.status === 201) {
-            return response.data.id;
+            return response.json().then(data => data.id);
         }
         return false;
     } catch (err) {
@@ -116,14 +142,20 @@ export const newApp = async (data, formData) => {
 }
 
 export const newPhase = async (data, id) => {
+    const csrftoken = getCookie('csrftoken');
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('X-CSRFToken', csrftoken);
+
     try {
-        const response = await client.post(
-            `api/applications/${id}/phases/`,
+        const response = await fetch(
+            `${process.env.REACT_APP_BASE_URL}/api/applications/${id}/phases/`,
             {
-                ...data,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                method: 'POST',
+                headers: headers,
+                credentials: 'include',
+                body: JSON.stringify(data),
             }
         );
         return response;
@@ -133,13 +165,23 @@ export const newPhase = async (data, id) => {
 }
 
 export const getApps = async () => {
+    const csrftoken = getCookie('csrftoken');
+
+    const headers = new Headers();
+    headers.append('X-CSRFToken', csrftoken);
+
     try {
-        const response = await client.get(`api/applications/`);
-        if (response.status === 200) return response.data;
+        const response = await fetch(
+            `${process.env.REACT_APP_BASE_URL}/api/applications/`,
+            {
+                headers: headers,
+                credentials: 'include',
+            }
+        );
+        if (response.ok) return response.json();
         else return false;
     } catch (err) {
         console.log(err);
         return false;
     }
 }
-

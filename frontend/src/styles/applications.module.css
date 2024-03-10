@@ -17,7 +17,7 @@
 }
 
 .slideOut {
-    animation: slideOut 0.5s forwards;
+    animation: slideOut 0.7s forwards;
 }
 
 .slideIn {
@@ -30,8 +30,9 @@
     }
 
     100% {
-        transform: translateY(-200%);
-        opacity: 0.5;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
     }
 }
 
