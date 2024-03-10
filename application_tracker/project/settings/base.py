@@ -8,6 +8,8 @@ ALLOWED_HOSTS: List[str] = ['*']
 
 INTERNAL_IPS = ['127.0.0.1']
 
+FRONTEND_BASE_URL = env('FRONTEND_BASE_URL')  # type: ignore # noqa: F821
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
