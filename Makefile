@@ -21,7 +21,11 @@ migrations:
 .PHONY: run-dependencies
 run-dependencies:
 	test -f .env || touch .env
-	docker compose -f docker-compose.backend-dev.yaml up --force-recreate db
+	docker compose -f docker-compose.backend-dev.yaml down; docker compose -f docker-compose.backend-dev.yaml build; docker compose -f docker-compose.backend-dev.yaml up --force-recreate db --force-recreate redis --force-recreate worker
+
+.PHONY: stop-dependencies
+stop-dependencies:
+	docker compose -f docker-compose.backend-dev.yaml down
 
 .PHONY: run-backend
 run-backend:
