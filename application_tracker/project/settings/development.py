@@ -7,7 +7,9 @@ CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000']
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = env(  # type: ignore # noqa: F821
+    'EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend'
+) or 'django.core.mail.backends.console.EmailBackend'
 
 LOGGING['formatters']['colored'] = {  # type: ignore # noqa: F821
     '()': 'colorlog.ColoredFormatter',

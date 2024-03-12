@@ -20,6 +20,7 @@ include(
     'components/storage.py',
     'components/rest_framework.py',
     'components/authentication.py',
+    'components/celery.py',
     STAGE_SETTINGS,
     'envvars.py',
 )

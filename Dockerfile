@@ -23,6 +23,6 @@ COPY .env .env
 EXPOSE 8000
 
 COPY scripts/entrypoint.sh /entrypoint.sh
+COPY scripts/worker-entrypoint.sh /worker-entrypoint.sh
 RUN chmod a+x /entrypoint.sh
-
-ENTRYPOINT ["/entrypoint.sh"]
+RUN chmod a+x /worker-entrypoint.sh

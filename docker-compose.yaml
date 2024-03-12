@@ -13,17 +13,44 @@ services:
     volumes:
       - postgresql-data:/var/lib/postgresql/data
 
+  redis:
+    image: redis:7.2-alpine
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis-data:/data
+
+  worker:
+    build: .
+    entrypoint: /worker-entrypoint.sh
+    restart: unless-stopped
+    depends_on:
+      - redis
+      - app
+    environment:
+      APPLICATION_TRACKER_SETTING_DATABASES: '{"default":{"HOST":"db"}}'
+      APPLICATION_TRACKER_SETTING_CELERY_BROKER_URL: redis://redis/0
+      APPLICATION_TRACKER_SETTING_CELERY_RESULT_BACKEND: redis://redis/0
+      STAGE: production
+
   app:
     build: .
+    entrypoint: /entrypoint.sh
     restart: unless-stopped
     ports:
      - 8000:8000
     depends_on:
       - db
+      - redis
     environment:
       APPLICATION_TRACKER_SETTING_DATABASES: '{"default":{"HOST":"db"}}'
+      APPLICATION_TRACKER_SETTING_CELERY_BROKER_URL: redis://redis/0
+      APPLICATION_TRACKER_SETTING_CELERY_RESULT_BACKEND: redis://redis/0
       STAGE: production
 
 volumes:
   postgresql-data:
+    driver: local
+  redis-data:
     driver: local
