@@ -32,6 +32,7 @@ services:
       APPLICATION_TRACKER_SETTING_DATABASES: '{"default":{"HOST":"db"}}'
       APPLICATION_TRACKER_SETTING_CELERY_BROKER_URL: redis://redis/0
       APPLICATION_TRACKER_SETTING_CELERY_RESULT_BACKEND: redis://redis/0
+      EMAIL_BACKEND: ${EMAIL_BACKEND}
 
   app:
     build: .
@@ -44,6 +45,9 @@ services:
       - redis
     environment:
       APPLICATION_TRACKER_SETTING_DATABASES: '{"default":{"HOST":"db"}}'
+      APPLICATION_TRACKER_SETTING_CELERY_BROKER_URL: redis://redis/0
+      APPLICATION_TRACKER_SETTING_CELERY_RESULT_BACKEND: redis://redis/0
+      EMAIL_BACKEND: ${EMAIL_BACKEND}
 
 volumes:
   postgresql-data:

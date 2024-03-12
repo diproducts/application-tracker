@@ -7,4 +7,4 @@ CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS')  # type: ignore # noqa: F821
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'application_tracker.users.backends.AsyncSmtpEmailBackend'

@@ -21,7 +21,14 @@ migrations:
 .PHONY: run-dependencies
 run-dependencies:
 	test -f .env || touch .env
-	docker compose -f docker-compose.backend-dev.yaml down; docker compose -f docker-compose.backend-dev.yaml build; docker compose -f docker-compose.backend-dev.yaml up --force-recreate db --force-recreate redis --force-recreate worker
+	docker compose -f docker-compose.backend-dev.yaml down; \
+	docker compose -f docker-compose.backend-dev.yaml up --force-recreate db --force-recreate redis --force-recreate worker
+
+.PHONY: run-dependencies-mail
+run-dependencies-mail:
+	test -f .env || touch .env
+	EMAIL_BACKEND=application_tracker.users.backends.AsyncSmtpEmailBackend docker compose -f docker-compose.backend-dev.yaml down; \
+	EMAIL_BACKEND=application_tracker.users.backends.AsyncSmtpEmailBackend docker compose -f docker-compose.backend-dev.yaml up --force-recreate db --force-recreate redis --force-recreate worker
 
 .PHONY: stop-dependencies
 stop-dependencies:
@@ -30,7 +37,15 @@ stop-dependencies:
 .PHONY: run-backend
 run-backend:
 	test -f .env || touch .env
-	docker compose -f docker-compose.frontend-dev.yaml down; docker compose -f docker-compose.frontend-dev.yaml build; docker compose -f docker-compose.frontend-dev.yaml up
+	docker compose -f docker-compose.frontend-dev.yaml down; \
+	docker compose -f docker-compose.frontend-dev.yaml build; \
+	docker compose -f docker-compose.frontend-dev.yaml up
+
+.PHONY: run-backend-mail
+run-backend-mail:
+	EMAIL_BACKEND=application_tracker.users.backends.AsyncSmtpEmailBackend docker compose -f docker-compose.frontend-dev.yaml down; \
+	EMAIL_BACKEND=application_tracker.users.backends.AsyncSmtpEmailBackend docker compose -f docker-compose.frontend-dev.yaml build; \
+	EMAIL_BACKEND=application_tracker.users.backends.AsyncSmtpEmailBackend docker compose -f docker-compose.frontend-dev.yaml up
 
 .PHONY: stop-backend
 stop-backend:
@@ -39,6 +54,10 @@ stop-backend:
 .PHONY: runserver
 runserver:
 	poetry run python -m application_tracker.manage runserver
+
+.PHONY: runserver-mail
+runserver-mail:
+	EMAIL_BACKEND=application_tracker.users.backends.AsyncSmtpEmailBackend poetry run python -m application_tracker.manage runserver
 
 .PHONY: shell
 shell:
