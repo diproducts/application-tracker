@@ -74,6 +74,33 @@ export const login = async (data) => {
     }
 }
 
+export const reset = async (data) => {
+    const csrftoken = getCookie('csrftoken');
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('X-CSRFToken', csrftoken);
+
+    try {
+        const response = await fetch(
+            `${process.env.REACT_APP_BASE_URL}/api/auth/password/reset/`,
+            {
+                method: 'POST',
+                headers: headers,
+                credentials: 'include',
+                body: JSON.stringify({
+                    email: data.email,
+                }),
+            }
+        );
+        console.log(response)
+        if (response.status === 200 || response.status === 204) return true;
+        else return false;
+    } catch (err) {
+        return false;
+    }
+}
+
 export const logout = async () => {
     console.log('logout function');
     const csrftoken = getCookie('csrftoken');

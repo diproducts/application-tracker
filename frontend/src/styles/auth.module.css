@@ -59,6 +59,42 @@
     line-height: normal;
 }
 
+.greyText {
+    color: #595959;
+    text-align: center;
+    font-family: Inter;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-decoration-line: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+.greyTextSmall {
+    color: #595959;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-decoration-line: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+.addText {
+    color: var(--header-black, #434343);
+
+    /* text air */
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
 input {
     width: 100%;
     height: 38px;
