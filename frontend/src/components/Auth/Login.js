@@ -8,7 +8,7 @@ import styles from "../../styles/auth.module.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const LogIn = observer(() => {
+const LogIn = observer(({ reset }) => {
     const { register, handleSubmit, getValues } = useForm();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
@@ -85,6 +85,10 @@ const LogIn = observer(() => {
                             <div className="w-[10px] h-[10px] bg-white rounded-full"></div>
                             <div className="w-[10px] h-[10px] bg-white rounded-full"></div>
                         </div> : 'log in'}</button>
+
+                    <div className="w-full flex justify-center items-center mt-[20px]">
+                        <p onClick={reset} className={styles.greyText}>Forgot password?</p>
+                    </div>
                 </div>
             </form>
         </div>

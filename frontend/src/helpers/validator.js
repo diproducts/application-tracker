@@ -19,6 +19,7 @@ Schema.prototype.validate = function (input, mode = 'singup') {
         }
         return true;
     }
+
     for (const [key, value] of Object.entries(input)) {
         if (key === 'email') {
             if (!EmailValidator.validate(value)) return false;
