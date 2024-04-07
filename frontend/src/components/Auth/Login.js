@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import schema from "../../helpers/validator";
 import { observer } from "mobx-react";
 import userStore from "../../store/userStore";
@@ -64,6 +64,7 @@ const LogIn = observer(({ reset }) => {
                     <label htmlFor='email'>email: </label>
                     <div style={{ position: "relative" }}>
                         <input
+                            className="mb-[25px]"
                             {...register("email", { required: true })}
                             type='text'
                             name='email' />
@@ -71,6 +72,7 @@ const LogIn = observer(({ reset }) => {
                     <label htmlFor='password'>password: </label>
                     <div style={{ position: "relative" }}>
                         <input
+                            className="mb-[25px]"
                             {...register("password", { required: true })}
                             type='password'
                             name='password' />

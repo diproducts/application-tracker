@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { checkUser, register, logout, login, reset } from '../helpers/api';
+import { checkUser, register, logout, login, reset, newPassword } from '../helpers/api';
 
 class UserStore {
     isLogged = false;
@@ -30,6 +30,11 @@ class UserStore {
 
     async resetUser(data) {
         const response = await reset(data);
+        return response;
+    }
+
+    async newPassword(data) {
+        const response = await newPassword(data);
         return response;
     }
 

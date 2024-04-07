@@ -66,8 +66,8 @@ const Reset = observer(({ setMode }) => {
                 theme="light" />
             {emailSent
                 ? <div>
-                    <p className={`${styles.addText} mt-[20px] mb-[8px]`}>Your password has been reset.</p>
-                    <p className={`${styles.addText}`}>Please check your email for instructions.</p>
+                    {/* <p className={`${styles.addText} mt-[20px] mb-[8px]`}></p> */}
+                    <p className={`${styles.addText} mt-[20px] `}>Please check your email for instructions.</p>
 
                     <p onClick={goToMain} className={`${styles.greyTextSmall} mt-[20px]`}>Go to sign in page</p>
                 </div>
@@ -76,7 +76,7 @@ const Reset = observer(({ setMode }) => {
                         <div className={styles.formWrapper}>
                             <label htmlFor='email'>email: </label>
                             <div style={{ position: "relative" }}>
-                                <input
+                                <input className="mb-[25px]"
                                     {...register("email", { required: true })}
                                     type='text'
                                     name='email' />

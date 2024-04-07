@@ -74,19 +74,27 @@ const SignUp = observer(() => {
                 <div className={styles.formWrapper}>
                     <label htmlFor='name'>username: </label>
                     <div style={{ position: "relative" }}>
-                        <input {...register("name", { required: false })} type='text' name='name' />
+                        <input {...register("name", { required: false })}
+                            className="mb-[25px]"
+                            type='text' name='name' />
                     </div>
                     <label htmlFor='email'>email: </label>
                     <div style={{ position: "relative" }}>
-                        <input {...register("email", { required: true })} type='text' name='email' />
+                        <input {...register("email", { required: true })}
+                            className="mb-[25px]"
+                            type='text' name='email' />
                     </div>
                     <label htmlFor='password'>password: </label>
                     <div style={{ position: "relative" }}>
-                        <input {...register("password", { required: true })} type='password' name='password' />
+                        <input {...register("password", { required: true })}
+                            className="mb-[25px]"
+                            type='password' name='password' />
                     </div>
                     <label htmlFor='confirm'>confirm password:</label>
                     <div style={{ position: "relative" }}>
-                        <input {...register("confirm", { required: true })} type='password' name='confirm' />
+                        <input {...register("confirm", { required: true })}
+                            className="mb-[25px]"
+                            type='password' name='confirm' />
                     </div>
                     <button
                         onClick={handleClick}

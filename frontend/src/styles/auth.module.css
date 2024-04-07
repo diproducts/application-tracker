@@ -5,16 +5,9 @@
 
 .title {
     font-family: "Noto Sans";
-    font-size: 24px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-}
-
-.selected {
-    text-decoration-line: underline;
-    text-decoration-thickness: 3px;
-    text-underline-offset: 8px;
 }
 
 .mainTitle {
@@ -102,7 +95,6 @@ input {
     border-radius: 7px;
     border: 0.5px solid #D7D7D7;
     background: #F9F9F9;
-    margin-bottom: 25px;
     margin-top: 5px;
     resize: none;
     padding-left: 8px;

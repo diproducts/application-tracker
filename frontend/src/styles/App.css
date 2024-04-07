@@ -47,10 +47,25 @@ header {
   cursor: pointer;
 }
 
+.inter-text {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.work-sans {
+  font-family: "Work Sans";
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.4px;
+}
+
 footer {
   width: 100%;
   height: fit-content;
-  background: #666;
+  background: rgba(102, 102, 102, 0.80);
   display: flex;
   justify-content: space-between;
   align-items: center;
