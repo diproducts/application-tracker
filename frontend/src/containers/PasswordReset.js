@@ -23,7 +23,7 @@ const PasswordReset = observer(({ setMode }) => {
         setIsLoading(true);
         const response = await userStore.newPassword({
             new_password1: data.password,
-            new_password2: data.password,
+            new_password2: data.confirm,
             uid: userId,
             token: token
         });
