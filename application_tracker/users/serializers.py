@@ -1,14 +1,16 @@
 from allauth.account import app_settings
 from allauth.account.adapter import get_adapter
-from allauth.account.utils import filter_users_by_email, user_pk_to_url_str, user_username
+from allauth.account.forms import default_token_generator
+from allauth.account.utils import filter_users_by_email, url_str_to_user_pk, user_pk_to_url_str, user_username
 from dj_rest_auth.forms import AllAuthPasswordResetForm
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from dj_rest_auth.serializers import PasswordResetSerializer, UserDetailsSerializer
 from django.conf import settings
 from django.contrib.auth import authenticate, get_user_model
-from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_str
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from application_tracker.preferences.serializers import PreferencesSerializer
 
@@ -94,3 +96,23 @@ class MyPasswordResetSerializer(PasswordResetSerializer):
             raise serializers.ValidationError(self.reset_form.errors)
 
         return value
+
+
+class PasswordResetConfirmTokenVerifySerializer(serializers.Serializer):
+    """
+    Serializer for verifying a password reset confirm token.
+    """
+    uid = serializers.CharField()
+    token = serializers.CharField()
+
+    def validate(self, attrs):
+        try:
+            uid = force_str(url_str_to_user_pk(attrs['uid']))
+            self.user = User._default_manager.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            raise ValidationError({'uid': ['Invalid value']})
+
+        if not default_token_generator.check_token(self.user, attrs['token']):
+            raise ValidationError({'token': ['Invalid value']})
+
+        return attrs
