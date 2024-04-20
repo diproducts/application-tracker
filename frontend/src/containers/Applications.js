@@ -9,7 +9,9 @@ import styles from "../styles/applications.module.css"
 const Applications = observer(() => {
     const [showAddModal, setShowAddModal] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const [applications, setApplications] = useState(applicationStore.applications)
+    const [applications, setApplications] = useState([]);
+    const [applied, setApplied] = useState([]);
+    const [notApplied, setNotApplied] = useState([])
 
     const handleAddClick = () => {
         setShowAddModal(true);
@@ -25,12 +27,18 @@ const Applications = observer(() => {
 
     useEffect(() => {
         setApplications(applicationStore.applications)
+        setApplied(applicationStore.applications.filter((app) => {
+            return app.phases?.length > 0
+        }));
+        setNotApplied(applicationStore.applications.filter((app) => {
+            return app.phases?.length === 0
+        }))
     }, [applicationStore.applications])
 
 
     return (
-        <div className={`w-fit mx-auto mt-[57px]`}>
-            <div className="flex justify-between items-center">
+        <div className={`w-fit mx-auto pt-[140px] h-full`}>
+            <div className="flex h-fit justify-between items-center">
                 <span className="flex flex-col">
                     <h1 className={styles.applicationTitle}>My Applications</h1>
                     {applicationStore.applications?.length === 0 &&
@@ -51,7 +59,9 @@ const Applications = observer(() => {
                     </div>
                     : applications?.length === 0
                         ? <EmptyState />
-                        : <AppTable applications={applications} />
+                        : <AppTable applied={applied}
+                            notApplied={notApplied}
+                            applications={applications} />
             }
             {showAddModal && <AddApplication setShowAddModal={setShowAddModal} />}
         </div >
