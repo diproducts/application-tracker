@@ -41,12 +41,14 @@ const PasswordReset = observer(({ setMode }) => {
 
         if (!schema.validate({ password }, 'password')) {
             setNotValid(true)
-            toast.error("Please provide a valid password!")
+            toast.error("Please provide a valid password!");
+            return;
         }
 
         if (confirm !== password) {
             setNotValid(true)
-            toast.error("Passwords don't match!")
+            toast.error("Passwords don't match!");
+            return;
         }
 
         setNotValid(false);
