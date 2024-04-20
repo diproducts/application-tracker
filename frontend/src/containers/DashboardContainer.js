@@ -4,7 +4,7 @@ import { useNavigate, Routes, Route } from "react-router-dom";
 import Header from "../components/Header";
 import DashboardMain from "../components/Dashboard/DashboardMain";
 import Applications from "./Applications";
-import styles from "../styles/dashboard.module.css";
+import styles from "../styles/applications.module.css";
 
 const DashboardContainer = observer(() => {
     const navigate = useNavigate();
@@ -13,10 +13,13 @@ const DashboardContainer = observer(() => {
         userStore.setLogged(false);
         navigate("/auth")
     }
+
+    const style = { height: "calc(100vh - 56px)" };
     return (
-        <div className={styles.dashContainer}>
+        <div style={style} className={`bg-[#F6F4F8] w-full`}>
             <Header handleLogout={handleLogout} />
-            <main>
+
+            <main className="h-full">
                 <Routes>
                     <Route path="/" element={<DashboardMain />} />
                     <Route path="/applications" element={<Applications />} />
