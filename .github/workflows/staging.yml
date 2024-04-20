@@ -44,3 +44,14 @@ jobs:
       - name: Build frontend
         run: |
           ssh target "cd code/application-tracker/ && make build-frontend && rm -r /var/www/application-tracker/ && cp -r frontend/build /var/www/application-tracker"
+      - name: Send email notification
+        uses: dawidd6/action-send-mail@v3.12.0
+        with:
+          server_address: smtp.mail.me.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "Staging: New Application Tracker version up"
+          to: ${{ secrets.EMAIL_NOTIFICATION_TO }}
+          from: ${{ secrets.EMAIL_FROM }}
+          body: Hey! A new STAGING version of Application Tracker has been uploaded to ${{ secrets.DOMAIN }}
