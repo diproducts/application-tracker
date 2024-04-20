@@ -49,8 +49,6 @@ jobs:
         with:
           server_address: smtp.mail.me.com
           server_port: 587
-          secure: true
-          tls: true
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "Staging: New Application Tracker version up"
