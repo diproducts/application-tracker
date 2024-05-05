@@ -5,16 +5,17 @@ import { useState, useEffect } from "react";
 import { EmptyState } from "../components/Dashboard/Applications/EmptyState";
 import { AppTable } from "../components/Dashboard/Applications/AppTable";
 import styles from "../styles/applications.module.css"
+import { useModals } from "../context/ModalContext";
 
 const Applications = observer(() => {
-    const [showAddModal, setShowAddModal] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [applications, setApplications] = useState([]);
     const [applied, setApplied] = useState([]);
     const [notApplied, setNotApplied] = useState([])
+    const { showModal } = useModals();
 
     const handleAddClick = () => {
-        setShowAddModal(true);
+        showModal("addApp")
     }
 
     useEffect(() => {
@@ -37,7 +38,7 @@ const Applications = observer(() => {
 
 
     return (
-        <div className={`w-fit mx-auto pt-[140px] h-full`}>
+        <div className={`w-fit mx-auto pt-[140px] dashboardContainer`}>
             <div className="flex h-fit justify-between items-center">
                 <span className="flex flex-col">
                     <h1 className={styles.applicationTitle}>My Applications</h1>
@@ -63,7 +64,6 @@ const Applications = observer(() => {
                             notApplied={notApplied}
                             applications={applications} />
             }
-            {showAddModal && <AddApplication setShowAddModal={setShowAddModal} />}
         </div >
     )
 })

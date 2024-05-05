@@ -7,24 +7,22 @@ import DatePicker from "react-datepicker";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "react-datepicker/dist/react-datepicker.css";
+import { useModals } from "../../context/ModalContext";
 
-const AddApplication = observer(({ setShowAddModal }) => {
-
+const AddApplication = observer(() => {
     const [jobTitle, setJobTitle] = useState("");
     const [link, setLink] = useState("");
     const [company, setCompany] = useState("");
     const [date, setDate] = useState(new Date());
     const [contact, setContact] = useState("");
     const [jobDescription, setJobDescription] = useState("");
-    const [unmounting, setUnmounting] = useState(false);
-
     const [resume, setResume] = useState(null);
     const [coverLetter, setCoverLetter] = useState(null);
 
-    const handleCloseModal = () => {
-        setUnmounting(true);
-        setTimeout(() => setShowAddModal(false), 500);
+    const { hideModal } = useModals();
 
+    const closeModal = () => {
+        hideModal("addApp");
     }
 
     const handleTitleChange = (e) => {
@@ -79,11 +77,11 @@ const AddApplication = observer(({ setShowAddModal }) => {
             contacts: contact
         });
         await applicationStore.getApps();
-        handleCloseModal()
+        closeModal()
     }
 
     return (
-        <div className={`dark-screen ${unmounting && "fade-out"}`}>
+        <>
             <ToastContainer
                 position="top-right"
                 autoClose={5000}
@@ -94,7 +92,7 @@ const AddApplication = observer(({ setShowAddModal }) => {
                 draggable
                 theme="light" />
 
-            <div className={styles.addPopup}>
+            <div className={`${styles.addPopup} animate-popUpIn`}>
                 <div className="add-popup-title">
                     <h1 className="add-popup-title-text">Add a New Application</h1>
                 </div>
@@ -147,13 +145,13 @@ const AddApplication = observer(({ setShowAddModal }) => {
                                 name="description" />
                         </div>
                         <div className="add-popup-button-container">
-                            <button onClick={handleCloseModal} className="add-popup-cancel-button">CANCEL</button>
+                            <button onClick={closeModal} className="add-popup-cancel-button">CANCEL</button>
                             <button onClick={handleSave} className="add-popup-save-button">SAVE</button>
                         </div>
                     </div>
                 </div>
             </div >
-        </div >
+        </>
     )
 })
 
