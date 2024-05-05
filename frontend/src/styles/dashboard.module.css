@@ -32,7 +32,7 @@
 
 
 .dashboardContainer {
-    height: 100%;
+    height: calc(100vh - (61px + 55.5px));
     width: 80%;
     margin: auto;
     display: flex;

@@ -8,6 +8,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
+:root {
+  --blue: "#6BA6FF";
+  --blueHover: "#448FFF"
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -28,6 +33,35 @@ code {
 .fade-out {
   opacity: 0;
   transition: opacity 0.5s ease;
+}
+
+.text-notosans-500 {
+  font-family: "Noto Sans";
+  font-weight: 500;
+}
+
+.text-standard-inter {
+  font-family: "Inter";
+  font-weight: 400;
+}
+
+.text-inter-500 {
+  font-family: "Inter";
+  font-weight: 500;
+}
+
+.dashboardContainer {
+  height: calc(100vh - (61px + 55.5px));
+}
+
+.text-bold-inter {
+  font-family: "Inter";
+  font-weight: 600;
+}
+
+.text-inter-700 {
+  font-family: "Inter";
+  font-weight: 700;
 }
 
 .hidden-scroll {

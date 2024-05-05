@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react';
 import { observer } from "mobx-react";
 import userStore from './store/userStore';
 import Footer from './components/Footer';
+import { ModalManager } from "./components/PopUps/ModalManager";
+import { ModalProvider } from './context/ModalContext';
 
 const App = observer(() => {
   const [isLoading, setIsLoading] = useState(true);
@@ -24,16 +26,19 @@ const App = observer(() => {
   if (isLoading) {
     return;
   } else return (
-    <div className='flex flex-col w-screen h-screen'>
-      <Routes>
-        <Route path="*" element={<NotFound />} />
-        <Route path="/" element={userStore.isLogged ? <Navigate to="/dashboard" /> : <Navigate to="/auth" />} />
+    <ModalProvider>
+      <ModalManager />
+      <div className='flex flex-col w-screen h-screen'>
+        <Routes>
+          <Route path="*" element={<NotFound />} />
+          <Route path="/" element={userStore.isLogged ? <Navigate to="/dashboard" /> : <Navigate to="/auth" />} />
 
-        <Route path="/dashboard/*" element={userStore.isLogged ? <DashboardContainer /> : <Navigate to="/auth" />} />
-        <Route path="/auth/*" element={userStore.isLogged ? <Navigate to="/dashboard" /> : <Auth />} />
-      </Routes>
-      <Footer />
-    </div>
+          <Route path="/dashboard/*" element={userStore.isLogged ? <DashboardContainer /> : <Navigate to="/auth" />} />
+          <Route path="/auth/*" element={userStore.isLogged ? <Navigate to="/dashboard" /> : <Auth />} />
+        </Routes>
+        <Footer />
+      </div>
+    </ModalProvider>
   )
 })
 
