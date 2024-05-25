@@ -1,11 +1,9 @@
-import styles from "../../../styles/applications.module.css"
-
 export const EmptyState = () => {
 
     return (
-        <div className={`w-[60vw] mt-[97px] ${styles.emptyState}`}>
-            <p>Welcome to Applications! Once you’ve applied for a job, you can save the resume and cover letter you used and any other details to track your progress.</p>
-            <p>To create an application record, just click “Add an Application”. Good luck!</p>
+        <div className="w-[72vw] border-[#F4F3F3] border-[1px] mt-[50px] cursor-pointer shadow-tableRow rounded-[10px] min-h-[65px] bg-[white] gap-[24px] h-[35px] flex justify-start
+        px-[17px] items-center">
+            <p className="font-inter text-regBlack font-normal text-[15px]">Your applications will appear here. Click ”Add an Application” to start</p>
         </div>
     )
 }

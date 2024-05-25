@@ -2,15 +2,29 @@ import styles from "../../../styles/applications.module.css"
 import { observer } from "mobx-react";
 import { ApplicationRow } from "./ApplicationRow";
 import { useEffect, useState } from "react";
+import { EmptyState } from "./EmptyState";
+import applicationStore from "../../../store/applicationStore";
 
-export const AppTable = observer(({ applied, notApplied, applications }) => {
+export const AppTable = observer(({ setIsLoading, isLoading }) => {
     const [active, setActive] = useState("all");
-    const [localApps, setLocalApps] = useState(applications);
+    const [applied, setApplied] = useState([]);
+    const [notApplied, setNotApplied] = useState([]);
+    const [localApps, setLocalApps] = useState(applicationStore.applications);
+
+    useEffect(() => {
+        const { applications } = applicationStore;
+        setApplied(applications.filter((app) => {
+            return app.phases?.length > 0
+        }));
+        setNotApplied(applications.filter((app) => {
+            return app.phases?.length === 0
+        }))
+    }, [applicationStore.applications, isLoading])
 
     useEffect(() => {
         switch (active) {
             case "all":
-                setLocalApps(applications);
+                setLocalApps(applicationStore.applications);
                 break;
             case "applied":
                 setLocalApps(applied);
@@ -19,7 +33,7 @@ export const AppTable = observer(({ applied, notApplied, applications }) => {
                 setLocalApps(notApplied);
                 break;
         }
-    }, [active])
+    }, [active]);
 
     return (
         <div className={`w-[72vw] pt-[30px] pb-[50px] flex flex-col h-full`}>
@@ -34,29 +48,34 @@ export const AppTable = observer(({ applied, notApplied, applications }) => {
                     className={`${styles.rightBtn} w-[117px] flex justify-center items-center hover:bg-[#C8AEFF] 
                     ${active === "not" ? "bg-[#C8AEFF]" : "bg-[#FEFEFE]"}`}>Not Applied</button>
             </div>
-            <div className="gap-[24px] min-h-[65px] flex justify-center items-center">
-                <div className="w-[36%] pl-[25px] h-full flex justify-start items-center">
-                    <span className={`${styles.header}`}>Role</span>
-                </div>
-                <div className="w-[18%] pl-[5px] h-full flex justify-start items-center">
-                    <span className={styles.header}>Company</span>
-                </div>
-                <div className="w-[18%] pl-[15px] h-full flex justify-start items-center">
-                    <span className={styles.header}>Applied date</span>
-                </div>
-                <div className="w-[28%] h-full flex justify-start items-center">
-                    <span className={styles.header}>Status</span>
-                </div>
-            </div>
-            <div className="overflow-scroll h-full
+            {(!localApps || localApps.length === 0)
+                ? <EmptyState />
+                : <>
+                    <div className="gap-[24px] min-h-[65px] flex justify-center items-center">
+                        <div className="w-[36%] pl-[25px] h-full flex justify-start items-center">
+                            <span className={`${styles.header}`}>Role</span>
+                        </div>
+                        <div className="w-[18%] pl-[5px] h-full flex justify-start items-center">
+                            <span className={styles.header}>Company</span>
+                        </div>
+                        <div className="w-[18%] pl-[15px] h-full flex justify-start items-center">
+                            <span className={styles.header}>Applied date</span>
+                        </div>
+                        <div className="w-[28%] h-full flex justify-start items-center">
+                            <span className={styles.header}>Status</span>
+                        </div>
+                    </div>
+                    <div className="overflow-scroll h-full
             hidden-scroll pb-[100px] px-[10px] box-border flex flex-col gap-[20px]">
-                {localApps?.map((app, index) =>
-                    <ApplicationRow
-                        key={app.id + Math.random()}
-                        app={app} />)}
+                        {localApps?.map((app, index) =>
+                            <ApplicationRow
+                                setIsLoading={setIsLoading}
+                                key={app.id + Math.random()}
+                                app={app} />)}
 
-            </div>
-            <div className={styles.shadow}></div>
+                    </div>
+                    <div className={styles.shadow}></div>
+                </>}
         </div >
     )
 })

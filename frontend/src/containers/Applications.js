@@ -1,21 +1,17 @@
-import AddApplication from "../components/PopUps/AddApplication";
 import { observer } from "mobx-react";
-import applicationStore from "../store/applicationStore";
 import { useState, useEffect } from "react";
 import { EmptyState } from "../components/Dashboard/Applications/EmptyState";
 import { AppTable } from "../components/Dashboard/Applications/AppTable";
 import styles from "../styles/applications.module.css"
 import { useModals } from "../context/ModalContext";
+import applicationStore from "../store/applicationStore";
 
 const Applications = observer(() => {
     const [isLoading, setIsLoading] = useState(true);
-    const [applications, setApplications] = useState([]);
-    const [applied, setApplied] = useState([]);
-    const [notApplied, setNotApplied] = useState([])
     const { showModal } = useModals();
 
     const handleAddClick = () => {
-        showModal("addApp")
+        showModal("addApp", { setIsLoading })
     }
 
     useEffect(() => {
@@ -24,17 +20,7 @@ const Applications = observer(() => {
             setTimeout(() => setIsLoading(false), 1000)
         }
         getApps()
-    }, [])
-
-    useEffect(() => {
-        setApplications(applicationStore.applications)
-        setApplied(applicationStore.applications.filter((app) => {
-            return app.phases?.length > 0
-        }));
-        setNotApplied(applicationStore.applications.filter((app) => {
-            return app.phases?.length === 0
-        }))
-    }, [applicationStore.applications])
+    }, [isLoading])
 
 
     return (
@@ -42,8 +28,6 @@ const Applications = observer(() => {
             <div className="flex h-fit justify-between items-center">
                 <span className="flex flex-col">
                     <h1 className={styles.applicationTitle}>My Applications</h1>
-                    {applicationStore.applications?.length === 0 &&
-                        <p className={`${styles.applicationSecondary}`}>Here you can keep applications you’ve applied for</p>}
                 </span>
                 <button onClick={handleAddClick} className="add-app-button">ADD AN APPLICATION</button>
             </div>
@@ -58,11 +42,9 @@ const Applications = observer(() => {
                             ></span>
                         </div>
                     </div>
-                    : applications?.length === 0
+                    : applicationStore.applications?.length === 0
                         ? <EmptyState />
-                        : <AppTable applied={applied}
-                            notApplied={notApplied}
-                            applications={applications} />
+                        : <AppTable isLoading={isLoading} setIsLoading={setIsLoading} />
             }
         </div >
     )
