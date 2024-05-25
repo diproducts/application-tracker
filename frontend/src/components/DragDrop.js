@@ -36,7 +36,6 @@ const DragDrop = ({ mode, selectedFile, setSelectedFile }) => {
         if (file.size > 5000000) {
             return;
         }
-        console.log(file)
         setSelectedFile(file);
     };
 
@@ -55,7 +54,7 @@ const DragDrop = ({ mode, selectedFile, setSelectedFile }) => {
                     id="input-file"
                     className="upload-input"
                     onInput={(event) => handleChange(event)} />
-                <label className="upload-label" htmlFor="input-file">upload</label>
+                <label className="upload-label" htmlFor="input-file">{selectedFile ? "replace" : "upload"}</label>
                 <p>or drag & drop here</p>
                 {selectedFile && <p>Selected file: {selectedFile.name}</p>}
             </div>

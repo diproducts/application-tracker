@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { newApp, newPhase, getApps } from "../helpers/api";
+import { newApp, newPhase, getApps, updateApp, updatePhase } from "../helpers/api";
 
 class ApplicationStore {
     applications = [];
@@ -35,6 +35,29 @@ class ApplicationStore {
         }
     }
 
+    async updateApplication(id, fields, cv, cover_letter) {
+        const formData = new FormData();
+        if (cv) formData.append('cv', cv);
+        if (cover_letter) formData.append('cover_letter', cover_letter);
+        try {
+            const response = await updateApp(id, fields, formData)
+            return response;
+        } catch (err) {
+            console.log(err);
+            return false;
+        }
+    }
+
+    async updatePhase(data, id, phase_id) {
+        try {
+            const response = await updatePhase(data, id, phase_id);
+            return response
+        } catch (err) {
+            console.log(err);
+            return false;
+        }
+    }
+
     async postApplication({ company_name, position, url, cv, cover_letter, date, contacts, notes = "" }) {
         const data = {
             company_name,
@@ -47,7 +70,7 @@ class ApplicationStore {
 
         try {
             const applicationId = await newApp(data, formData)
-            if (applicationId) {
+            if (applicationId && date) {
                 await this.postPhase({ id: applicationId, name: "applied", contacts, date, notes })
             }
         } catch (err) {

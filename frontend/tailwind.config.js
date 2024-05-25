@@ -5,6 +5,10 @@ module.exports = {
     theme: {
 
         extend: {
+            fontFamily: {
+                inter: ["Inter", "sans-serif"],
+                noto: ["Noto Sans", "sans serif"]
+            },
             backgroundImage: {
                 main: "linear-gradient(113deg, #53D2FA 0.66%, #53A0FA 20.35%, rgba(136, 83, 250, 0.76) 39.74%, rgba(201, 120, 250, 0.91) 64.14%, rgba(248, 150, 250, 0.90) 82.39%, rgba(247, 83, 250, 0.56) 100%)",
                 violet: "linear-gradient(122deg, #8D8BFF -7.3%, #B282FF 116.26%)",
@@ -18,6 +22,7 @@ module.exports = {
             },
             colors: {
                 black: "#000",
+                regBlack: "#595959",
                 blue: "#6BA6FF",
                 blueHover: "#448FFF",
                 blueMainHover: "#5297FF",
@@ -27,6 +32,7 @@ module.exports = {
             backgroundColor: {
                 modalInset: "rgba(90, 101, 121, 0.34)",
                 white: "#FEFEFE",
+                softWhite: "#F9F9F9",
                 lightViolet: "rgba(166, 164, 248, 0.57)",
                 paleBlue: "rgba(164, 198, 248, 0.57)"
             },

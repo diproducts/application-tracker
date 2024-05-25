@@ -1,10 +1,10 @@
 import styles from "../../../styles/applications.module.css";
 import { useModals } from "../../../context/ModalContext";
 
-export const ApplicationRow = ({ app }) => {
+export const ApplicationRow = ({ app, setIsLoading }) => {
     const { showModal } = useModals();
     const handleClick = () => {
-        showModal("appInfo", { app })
+        showModal("appInfo", { app, setIsLoading })
     }
 
     if (!app) return;

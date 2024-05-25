@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import "react-datepicker/dist/react-datepicker.css";
 import { useModals } from "../../context/ModalContext";
 
-const AddApplication = observer(() => {
+const AddApplication = observer(({ setIsLoading }) => {
     const [jobTitle, setJobTitle] = useState("");
     const [link, setLink] = useState("");
     const [company, setCompany] = useState("");
@@ -45,6 +45,7 @@ const AddApplication = observer(() => {
     }
 
     const handleSave = async () => {
+        setIsLoading(true)
         if (!jobTitle || jobTitle?.length === 0) {
             toast.error("Please provide a job title");
             return;

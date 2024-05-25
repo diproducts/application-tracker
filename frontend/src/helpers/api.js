@@ -153,6 +153,44 @@ export const logout = async () => {
     }
 }
 
+export const updateApp = async (id, data, formData) => {
+    const csrftoken = getCookie('csrftoken');
+
+    const headers = new Headers();
+    headers.append('X-CSRFToken', csrftoken);
+
+    const form = new FormData();
+    // Append JSON data fields to FormData
+    Object.keys(data).forEach(key => {
+        form.append(key, data[key]);
+    });
+
+    if (formData) {
+        // Append file data fields to FormData
+        formData.forEach((value, key) => {
+            form.append(key, value);
+        });
+    }
+
+
+    try {
+        const response = await fetch(
+            `${process.env.REACT_APP_BASE_URL}/api/applications/${id}/`,
+            {
+                method: 'PATCH',
+                headers: headers,
+                credentials: 'include',
+                body: form,
+            }
+        );
+        return response.status === 200;
+    } catch (err) {
+        console.log(err)
+        return false;
+    }
+
+}
+
 export const newApp = async (data, formData) => {
     const csrftoken = getCookie('csrftoken');
 
@@ -187,6 +225,29 @@ export const newApp = async (data, formData) => {
         return false;
     } catch (err) {
         console.log(err)
+        return false;
+    }
+}
+
+export const updatePhase = async (data, id, phase_id) => {
+    const csrftoken = getCookie('csrftoken');
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('X-CSRFToken', csrftoken);
+
+    try {
+        const response = await fetch(
+            `${process.env.REACT_APP_BASE_URL}/api/applications/${id}/phases/${phase_id}/`,
+            {
+                method: 'PATCH',
+                headers: headers,
+                credentials: 'include',
+                body: JSON.stringify(data),
+            }
+        );
+        return response.status == 200;
+    } catch (err) {
         return false;
     }
 }
