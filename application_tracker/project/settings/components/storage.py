@@ -13,6 +13,3 @@ AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')  # type: ignore # noqa:
 AWS_S3_REGION_NAME = env('AWS_S3_REGION_NAME')  # type: ignore # noqa: F821
 AWS_S3_SIGNATURE_VERSION = env('AWS_S3_SIGNATURE_VERSION')  # type: ignore # noqa: F821
 AWS_S3_FILE_OVERWRITE = False
-AWS_S3_CUSTOM_DOMAIN = env('AWS_S3_CUSTOM_DOMAIN')  # type: ignore # noqa: F821
-AWS_CLOUDFRONT_KEY_ID = env.str('AWS_CLOUDFRONT_KEY_ID').strip()  # type: ignore # noqa: F821
-AWS_CLOUDFRONT_KEY = env.str('AWS_CLOUDFRONT_KEY', multiline=True).encode('ascii').strip()  # type: ignore # noqa: F821

@@ -13,9 +13,6 @@ class ApplicationPhase(models.Model):
     name = models.CharField(max_length=30, choices=PHASE_NAME_CHOICES)
     date = models.DateField(help_text='The date of the event', null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
-    contacts = models.CharField(
-        max_length=255, help_text='Provide contacts of the person of reference', null=True, blank=True
-    )
     notes = models.TextField(help_text='Any notes', null=True, blank=True)
 
     class Meta:
