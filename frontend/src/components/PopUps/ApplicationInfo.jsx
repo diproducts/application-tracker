@@ -101,7 +101,7 @@ export const ApplicationInfo = ({ app, setIsLoading }) => {
                             <p className="font-inter text-black font-bold
                             text-[13px]">Point of contact{contacts && ":"}</p>
                             {contacts
-                                ? <></>
+                                ? <p>{contacts}</p>
                                 : <span onClick={handleEdit} className="cursor-pointer bg-lightViolet border-[1px] border-solid border-lightBlue
                                 rounded-[5px] hover:opacity-70 flex justify-center items-center pb-[3px] h-[20px] px-[8px]
                                 text-white text-inter-500 text-[14px] text-center">add +</span>}
@@ -179,10 +179,10 @@ export const ApplicationInfo = ({ app, setIsLoading }) => {
 
 
                 <div className="flex justify-end items-center gap-[24px]">
-                    <button onClick={closeModal} className="border-blue border-[1.2px] border-solid h-[40px] rounded-[7px] px-[38px] text-[14px]
-                    text-standard-inter text-blue hover:border-blueHover hover:text-blueHover uppercase">cancel</button>
-                    <button className="bg-blue h-[40px] rounded-[7px] px-[49px] text-[14px]
-                    text-standard-inter hover:bg-blueMainHover text-white uppercase">save</button>
+                    <button onClick={handleEdit} className="border-blue border-[1.2px] border-solid h-[40px] rounded-[7px] px-[38px] text-[14px]
+                    text-standard-inter text-blue hover:border-blueHover hover:text-blueHover uppercase">edit</button>
+                    <button onClick={closeModal} className="bg-blue h-[40px] rounded-[7px] px-[49px] text-[14px]
+                    text-standard-inter hover:bg-blueMainHover text-white uppercase">close</button>
                 </div>
             </div>
         </>

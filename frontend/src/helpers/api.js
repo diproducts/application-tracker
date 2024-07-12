@@ -12,6 +12,7 @@ export const checkUser = async () => {
                 credentials: 'include',
             }
         );
+        console.log(response.body)
         return response.status === 200;
     } catch (err) {
         return false;
@@ -67,6 +68,7 @@ export const login = async (data) => {
                 }),
             }
         );
+        console.log(response)
         if (response.status === 200 || response.status === 204) return true;
         else return false;
     } catch (err) {
@@ -172,7 +174,6 @@ export const updateApp = async (id, data, formData) => {
         });
     }
 
-
     try {
         const response = await fetch(
             `${process.env.REACT_APP_BASE_URL}/api/applications/${id}/`,
@@ -183,6 +184,7 @@ export const updateApp = async (id, data, formData) => {
                 body: form,
             }
         );
+        console.log(response)
         return response.status === 200;
     } catch (err) {
         console.log(err)

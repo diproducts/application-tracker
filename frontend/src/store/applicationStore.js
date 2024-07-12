@@ -36,6 +36,7 @@ class ApplicationStore {
     }
 
     async updateApplication(id, fields, cv, cover_letter) {
+        console.log(cover_letter, "cover letter")
         const formData = new FormData();
         if (cv) formData.append('cv', cv);
         if (cover_letter) formData.append('cover_letter', cover_letter);

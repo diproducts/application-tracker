@@ -3,6 +3,7 @@ import { checkUser, register, logout, login, reset, newPassword } from '../helpe
 
 class UserStore {
     isLogged = false;
+    userEmail = ""
 
     constructor() {
         makeAutoObservable(this, {}, { autoBind: true });

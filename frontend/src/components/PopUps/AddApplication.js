@@ -18,6 +18,7 @@ const AddApplication = observer(({ setIsLoading }) => {
     const [jobDescription, setJobDescription] = useState("");
     const [resume, setResume] = useState(null);
     const [coverLetter, setCoverLetter] = useState(null);
+    const [noDate, setNoDate] = useState(false);
 
     const { hideModal } = useModals();
 
@@ -34,9 +35,12 @@ const AddApplication = observer(({ setIsLoading }) => {
     const handleCompanyChange = (e) => {
         setCompany(e.target.value);
     }
+
     const handleDateChange = (e) => {
         setDate(e.target.value);
     }
+
+
     const handleContactChange = (e) => {
         setContact(e.target.value);
     }
@@ -51,35 +55,38 @@ const AddApplication = observer(({ setIsLoading }) => {
             return;
         }
 
-        if (!date || date?.length === 0) {
-            toast.error("Please provide a date");
-            return;
-        }
-
         if (!company || company?.length === 0) {
             toast.error("Please provide a company name");
             return;
         }
 
-        const selected_date = new Date(date);
-        const year = selected_date.getFullYear();
-        const month = String(selected_date.getMonth() + 1).padStart(2, '0');
-        const day = String(selected_date.getDate()).padStart(2, '0');
-        const formattedDate = `${year}-${month}-${day}`;
-
-        await applicationStore.postApplication({
+        const data = {
             company_name: company,
             position: jobTitle,
             job_description: jobDescription,
             url: link,
             cv: resume,
             cover_letter: coverLetter,
-            date: formattedDate,
             contacts: contact
-        });
+        }
+
+        if (!noDate) {
+            const selected_date = new Date(date);
+            const year = selected_date.getFullYear();
+            const month = String(selected_date.getMonth() + 1).padStart(2, '0');
+            const day = String(selected_date.getDate()).padStart(2, '0');
+            const formattedDate = `${year}-${month}-${day}`;
+            data.date = formattedDate;
+        }
+
+        await applicationStore.postApplication(data);
         await applicationStore.getApps();
         closeModal()
     }
+
+    const handleLabelClick = () => {
+        setNoDate(!noDate);
+    };
 
     return (
         <>
@@ -98,7 +105,7 @@ const AddApplication = observer(({ setIsLoading }) => {
                     <h1 className="add-popup-title-text">Add a New Application</h1>
                 </div>
                 <div className="add-popup-container">
-                    <form>
+                    <form className="flex flex-col gap-[30px]">
                         <div className="add-popup-input-wrapper">
                             <label htmlFor="job_title">job title*:</label>
                             <input onChange={(e) => handleTitleChange(e)}
@@ -120,10 +127,21 @@ const AddApplication = observer(({ setIsLoading }) => {
                                 name="company" />
                         </div>
                         <div className="add-popup-input-wrapper">
-                            <label>date*:</label>
+                            <label>applied, date*:</label>
                             <DatePicker
                                 selected={date}
                                 onChange={(date) => setDate(date)} />
+                            <div className="flex justify-start items-end gap-[2px]">
+                                <input
+                                    checked={noDate}
+                                    onChange={(e) => setNoDate(e.target.value === "on")}
+                                    className="w-[13px] h-[13px] rounded-[4px]
+                                border-[#595959] border-[1px]" name="check" type="checkbox" />
+                                <label
+                                    onClick={handleLabelClick}
+                                    className="select-none font-inter text-[13px] text-regBlack cursor-pointer"
+                                    htmlFor="check">not applied yet</label>
+                            </div>
                         </div>
                         <div className="add-popup-input-wrapper">
                             <label htmlFor="contact">point of contact (recruiter/hiring manager/etc)</label>

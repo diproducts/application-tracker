@@ -1,6 +1,6 @@
 import { ToastContainer, toast } from 'react-toastify';
 import DatePicker from "react-datepicker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DragDrop from "../DragDrop";
 import { useModals } from "../../context/ModalContext";
 import { observer } from "mobx-react";
@@ -9,7 +9,7 @@ import applicationStore from "../../store/applicationStore";
 export const EditApplication = observer(({ app, setIsLoading }) => {
     const [resume, setResume] = useState(app?.cv ? { name: "something" } : null);
     const [coverLetter, setCoverLetter] = useState(app?.cover_letter ? { name: "something" } : null);
-    const [date, setDate] = useState(new Date(app?.phases[0]?.date));
+    const [date, setDate] = useState();
     const [jobTitle, setJobTitle] = useState(app?.position);
     const [link, setLink] = useState(app?.url);
     const [company, setCompany] = useState(app?.company_name);
@@ -17,6 +17,12 @@ export const EditApplication = observer(({ app, setIsLoading }) => {
     const [jobDescription, setJobDescription] = useState(app?.job_description);
 
     const { hideModal } = useModals();
+
+    useEffect(() => {
+        if (app?.phases[0]?.date) {
+            setDate(new Date(app?.phases[0]?.date))
+        }
+    }, [])
 
     const closeModal = () => {
         hideModal("appEdit");
@@ -51,7 +57,11 @@ export const EditApplication = observer(({ app, setIsLoading }) => {
 
         const data = checkForPhase();
         if (data?.length !== 0) {
-            await applicationStore.updatePhase(data, app?.id, app?.phases[0]?.id)
+            if (app.phases?.length === 0) {
+                await applicationStore.postPhase({ id: app?.id, name: "applied", ...data })
+            } else {
+                await applicationStore.updatePhase(data, app?.id, app?.phases[0]?.id)
+            }
         }
 
         applicationStore.getApps().then(() => closeModal())
@@ -65,6 +75,7 @@ export const EditApplication = observer(({ app, setIsLoading }) => {
             cv = resume;
         }
         if (coverLetter && coverLetter?.type) {
+            console.log('here')
             cover_letter = coverLetter;
         }
 
@@ -85,7 +96,7 @@ export const EditApplication = observer(({ app, setIsLoading }) => {
         }
 
         return {
-            fields, cv, coverLetter
+            fields, cv, cover_letter
         }
     }
 
@@ -94,14 +105,15 @@ export const EditApplication = observer(({ app, setIsLoading }) => {
         if (contacts && contacts !== app?.phases[0]?.contacts) {
             fields.contacts = contacts;
         }
-        const selected_date = new Date(date);
-        const year = selected_date.getFullYear();
-        const month = String(selected_date.getMonth() + 1).padStart(2, '0');
-        const day = String(selected_date.getDate()).padStart(2, '0');
-        const formattedDate = `${year}-${month}-${day}`;
-
-        if (app.phases[0].date !== formattedDate) {
-            fields.date = formattedDate;
+        if (date) {
+            const selected_date = new Date(date);
+            const year = selected_date.getFullYear();
+            const month = String(selected_date.getMonth() + 1).padStart(2, '0');
+            const day = String(selected_date.getDate()).padStart(2, '0');
+            const formattedDate = `${year}-${month}-${day}`;
+            if (app.phases[0].date !== formattedDate) {
+                fields.date = formattedDate;
+            }
         }
 
         return fields;
