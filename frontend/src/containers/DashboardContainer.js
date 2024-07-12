@@ -4,15 +4,26 @@ import { useNavigate, Routes, Route } from "react-router-dom";
 import Header from "../components/Header";
 import DashboardMain from "../components/Dashboard/DashboardMain";
 import Applications from "./Applications";
-import styles from "../styles/applications.module.css";
+import Account from "./Account";
+import { useState, useEffect } from "react";
+import applicationStore from "../store/applicationStore";
 
 const DashboardContainer = observer(() => {
+    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
     const handleLogout = () => {
         userStore.logoutUser();
         userStore.setLogged(false);
         navigate("/auth")
     }
+
+    useEffect(() => {
+        const getApps = async () => {
+            await applicationStore.getApps();
+            setTimeout(() => setIsLoading(false), 1000)
+        }
+        getApps()
+    }, [isLoading])
 
     const style = { height: "calc(100vh - 56px)" };
     return (
@@ -21,8 +32,10 @@ const DashboardContainer = observer(() => {
 
             <main className="h-full">
                 <Routes>
-                    <Route path="/" element={<DashboardMain />} />
-                    <Route path="/applications" element={<Applications />} />
+                    <Route path="/" element={<DashboardMain isLoading={isLoading} />} />
+                    <Route path="/applications" element={<Applications isLoading={isLoading}
+                        setIsLoading={setIsLoading} />} />
+                    <Route path="/account" element={<Account />} />
                 </Routes>
             </main>
         </div>

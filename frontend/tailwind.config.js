@@ -27,14 +27,16 @@ module.exports = {
                 blueHover: "#448FFF",
                 blueMainHover: "#5297FF",
                 purple: "#6046FF",
-                lightBlue: "rgba(107, 166, 255, 0.29)"
+                lightBlue: "rgba(107, 166, 255, 0.29)",
+                headerBlack: "#434343"
             },
             backgroundColor: {
                 modalInset: "rgba(90, 101, 121, 0.34)",
                 white: "#FEFEFE",
                 softWhite: "#F9F9F9",
                 lightViolet: "rgba(166, 164, 248, 0.57)",
-                paleBlue: "rgba(164, 198, 248, 0.57)"
+                paleBlue: "rgba(164, 198, 248, 0.57)",
+                hoverBlue: "rgba(164, 198, 248, 0.3)",
             },
             boxShadow: {
                 tableRow: "0px 2px 3.7px 0px rgba(0, 0, 0, 0.25)",

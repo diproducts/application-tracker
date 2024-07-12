@@ -54,7 +54,7 @@ const DragDrop = ({ mode, selectedFile, setSelectedFile }) => {
                     id="input-file"
                     className="upload-input"
                     onInput={(event) => handleChange(event)} />
-                <label className="upload-label" htmlFor="input-file">{selectedFile ? "replace" : "upload"}</label>
+                <label className="cursor-pointer upload-label" htmlFor="input-file">{selectedFile ? "replace" : "upload"}</label>
                 <p>or drag & drop here</p>
                 {selectedFile && <p>Selected file: {selectedFile.name}</p>}
             </div>

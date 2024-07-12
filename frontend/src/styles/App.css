@@ -444,6 +444,7 @@ tbody tr:nth-child(even) {
   font-weight: 500;
   line-height: normal;
   padding: 6px 25px;
+  cursor: pointer;
 }
 
 textarea {
