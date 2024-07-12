@@ -11,6 +11,5 @@ class ApplicationPhaseSerializer(serializers.ModelSerializer):
             'id',
             'name',
             'date',
-            'contacts',
             'notes',
         ]

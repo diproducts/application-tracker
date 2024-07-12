@@ -16,6 +16,7 @@ class ApplicationSerializer(serializers.ModelSerializer):
             'position',
             'url',
             'job_description',
+            'contacts',
             'cv',
             'save_cv_as_default',
             'cover_letter',
